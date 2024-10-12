@@ -17,13 +17,13 @@
     // Initialise room attributes
     public function __construct($roomId, $roomType, $nrAdults, $nrChildren, $description, $availability, $locationDetails, $roomAttributes) {
         $this->roomId = $roomId;
-        $this->roomType = $roomType;
-        $this->nrAdults = $nrAdults;
-        $this->nrChildren = $nrChildren;
+        $this->roomType = $roomType; // enum class
+        $this->nrAdults = $nrAdults; // Determined by roomtype
+        $this->nrChildren = $nrChildren; // Determined by roomtype
         $this->description = $description;
         $this->availability = $availability; // Standard "available".
-        $this->locationDetails = $locationDetails;
-        $this->roomAttributes = $roomAttributes;
+        $this->locationDetails = $locationDetails; // enum class
+        $this->roomAttributes = $roomAttributes; // enum class
     }
 
     // Availability status between two dates (returns current status if optional params null)

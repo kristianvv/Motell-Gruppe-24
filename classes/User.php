@@ -6,7 +6,7 @@ class User {
     protected $name;
     protected $email;
     protected $password;
-    protected $role; // 'Guest', 'Customer', 'Admin'
+    protected role $role; // 'Guest', 'Customer', 'Admin'
 
     // Initialise user 
     public function __construct($name, $email, $password, $role = 'Guest') {
@@ -19,6 +19,11 @@ class User {
     // User registration
     public function register() {
         // Store to DB
+    }
+
+    // Update user profile
+    public function updateProfile($name, $email, $password) {
+        // Logic
     }
 
     // User login

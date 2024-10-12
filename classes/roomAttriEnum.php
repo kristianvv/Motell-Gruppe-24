@@ -1,7 +1,6 @@
 <?php 
-    // Create enum for $roomAttributes in Room.php
     enum roomAttributes {
-        const RoomService = 1;
-        const BathroomType = 2;
+        const RoomService = ["Standard", "Delux"];
+        const BathroomType = ["Shower", "Bath"];
     }
 ?>

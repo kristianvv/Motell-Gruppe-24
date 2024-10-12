@@ -1,5 +1,4 @@
 <?php
-    // Create enum for $locationDetails in Room.php
     enum locationDetails {
         const Floor = 1;
         const CloseToElevator = 2;

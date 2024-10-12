@@ -11,7 +11,7 @@ class LoyaltyProgram {
     }
 
     // Add loyalty points
-    public function addPoints($points) {
+    public function addPoints($points) { 
         // Logic
     }
 
