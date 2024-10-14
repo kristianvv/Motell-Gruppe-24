@@ -1,0 +1,38 @@
+#ignore macosx files
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon file for folder customizations
+Icon?
+
+# macOS system file for when the volume has been mounted
+._*
+
+# Thumbnails for folders
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.Spotlight-V100
+.fseventsd
+
+# Backup files created by macOS (e.g., Finder's "Duplicate" feature)
+*.swp
+*.swo
+*.bak
+*.orig
+
+# macOS resource forks
+*.rsrc
+
+# Spotlight indexing files
+Spotlight-V100/
+.spotlight/
+
+# Trash folder which may appear on external drives
+.Trashes/
+
+# macOS .DS_Store in subfolders
+**/.DS_Store
