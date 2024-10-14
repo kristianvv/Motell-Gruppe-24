@@ -17,8 +17,10 @@ class User {
     }
 
     // User registration
-    public function register() {
+    public function register($pdo) {
         // Store to DB
+        $stmt = $pdo->prepare("INSERT INTO userdata (username, email, password) VALUES (?, ?, ?)");
+        $stmt->execute([$this->name, $this->email, $this->password]);
     }
 
     // Update user profile
