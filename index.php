@@ -43,11 +43,11 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
         <div class="w3-row-padding" style="margin:8px -16px;">
           <div class="w3-half w3-margin-bottom">
             <label><i class="fa fa-male"></i> Adults</label>
-            <input class="w3-input w3-border" type="number" value="1" name="Adults" min="1" max="6">
+            <input class="w3-input w3-border" type="number" value="1" name="Adults" min="1" max="6" required oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 1);" pattern="[1-6]">
           </div>
           <div class="w3-half">
             <label><i class="fa fa-child"></i> Kids</label>
-          <input class="w3-input w3-border" type="number" value="0" name="Kids" min="0" max="6">
+          <input class="w3-input w3-border" type="number" value="0" name="Kids" min="1" max="6" required oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 1);" pattern="[1-6]">
           </div>
         </div>
         <!-- SEARCH AVAILABILITY BUTTON -->
@@ -76,11 +76,11 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
     </div>
     <div class="w3-col m2">
       <label><i class="fa fa-male"></i> Adults</label>
-      <input class="w3-input w3-border" type="number" placeholder="1">
+      <input class="w3-input w3-border" type="number" placeholder="1" min="1" max="6" required oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 1);" pattern="[1-6]">
     </div>
     <div class="w3-col m2">
       <label><i class="fa fa-child"></i> Kids</label>
-      <input class="w3-input w3-border" type="number" placeholder="0">
+      <input class="w3-input w3-border" type="number" placeholder="0" min="1" max="6" required oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 1);" pattern="[1-6]">
     </div>
     <div class="w3-col m2">
       <label><i class="fa fa-search"></i> Search</label>
