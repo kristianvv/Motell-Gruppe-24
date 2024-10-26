@@ -1,3 +1,5 @@
+<!-- <link rel="stylesheet" type="text/css" href="./public/css/room_filter.css"> -->
+
 <!-- FIRST ROW -->
 <div class="w3-row-padding">
     <div class="w3-col m3">
@@ -78,7 +80,7 @@
     <button class="w3-button w3-block w3-black">Search</button>
 </div>
 
-
+<!-- Price Range Slider Function -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.js"></script>
 <script>
     const slider = document.getElementById('slider');
@@ -102,3 +104,26 @@
         }
     });
 </script>
+
+
+<style>
+    .slider-container {
+        width: 80%;
+        margin: 20px auto;
+    }
+    .value-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+    .value {
+        width: 50px;
+        text-align: center;
+    }
+
+    div#filter-search {
+        justify-content: center; /* Horizontally */
+        align-items: center; /* Vertically */
+        margin: 20px 0; /* Spacing */
+    }
+</style>
