@@ -13,17 +13,17 @@
                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                     <div class="w3-row-padding">
                         <div class="w3-col s12 m12 l12 w3-margin-bottom">
-                            <label for="username">Username:</label>
+                            <label for="username">Username:</label> <!-- Username -->
                             <input class="w3-input w3-border" type="text" id="username" name="username" placeholder="Email" required>
                         </div>
                         <div class="w3-col s12 m12 l12 w3-margin-bottom">
-                            <label for="password">Password:</label>
+                            <label for="password">Password:</label> <!-- Password -->
                             <input class="w3-input w3-border" type="password" id="pw" name="pw" placeholder="Enter Password" required>
                         </div>
                         <div class="w3-col s12 m12 l12 w3-margin-bottom">
                             <br>
-                            <input class="w3-button w3-block w3-green login" type="submit" value="Login">
-                            <span class="psw">Forgot <a href="#">password?</a></span>
+                            <input class="w3-button w3-block w3-green login" type="submit" value="Login"> <!-- Login button -->
+                            <span class="psw">Forgot <a href="#">password?</a></span> <!-- Forgot password button -->
                         </div>
                     </div>
                 </form>
@@ -32,12 +32,28 @@
     </header>
 </div>
 
-<script>
-// Get the modal
-var modal = document.getElementById('id01');
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
+
+<?php
+// Redirect, form validation and form processing
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Validation + Store DB
+
+    // Redirect to landing page after submit
+    header("Location: http://localhost/php/Motell-Gruppe-24/index.php");
+    exit(); // No more code runs after redirect
+}
+?>
+
+
+
+
+<!-- SCRIPT FOR GETTING MODAL -->
+
+<script>
+var modal = document.getElementById('id01'); // get modal
+
+window.onclick = function(event) { // click outside modal closes it
   if (event.target == modal) {
     modal.style.display = "none";
   }
