@@ -22,5 +22,6 @@
         <a href="./index.php#rooms" class="w3-bar-item w3-button w3-mobile">Rooms</a>
         <a href="#about" class="w3-bar-item w3-button w3-mobile">Contact</a>
         <a href="./registration.php" class="w3-bar-item w3-button w3-right w3-mobile w3-red">Register</a>
-        <a href="#contact" class="w3-bar-item w3-button w3-right w3-mobile w3-red">Login</a>
+        <!-- Button to open the modal login form in modal_login.php -->
+        <a onclick="document.getElementById('id01').style.display='block'" class="w3-bar-item w3-button w3-right w3-mobile w3-red">Login</a>
     </div>

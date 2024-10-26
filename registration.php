@@ -2,9 +2,9 @@
 // Include db connection file and user
 // include 'includes/dbconnect.inc.php';
 include 'includes/User.php';
-
-// Navbar
-include 'includes/navbar.php'; ?>
+include 'includes/navbar.php'; 
+include 'includes/modal_login.php'
+?>
 
 <header class="w3-display-container w3-content" style="max-width:1500px;"> <!-- Overarching container for background image -->
     <img class="w3-image" src="./public/images/bg-hotel.jpg" alt="The Hotel" style="min-width:1000px" width="1500" height="800">
@@ -15,26 +15,36 @@ include 'includes/navbar.php'; ?>
         <div class="w3-container w3-white w3-padding-16"> <!-- Fields container -->
             <!-- Form goes here -->
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                    <div class="w3-col m3">
-                        <label for="username">Username:</label>
-                        <input type="text" id="username" name="username">
+                <div class="w3-row-padding">
+                    <div class="w3-col s12 m12 l12 w3-margin-bottom">
+                        <label for="username">First Name:</label>
+                        <input class="w3-input w3-border" type="text" id="fname" name="fname" placeholder="John">
                     </div>
-                    <div class="w3-col m3">
+                    <div class="w3-col s12 m12 l12 w3-margin-bottom">
+                        <label for="username">Last Name:</label>
+                        <input class="w3-input w3-border" type="text" id="lnamee" name="lname" placeholder="Galt">
+                    </div>
+                    <div class="w3-col s12 m12 l12 w3-margin-bottom">
                         <label for="email">Email:</label>
-                        <input type="email" id="email" name="email">
+                        <input class="w3-input w3-border" type="email" id="email" name="email" placeholder="john.galt@gmail.com">
                     </div>
-                    <div class="w3-col m3">
+                    <div class="w3-col s12 m12 l12 w3-margin-bottom">
+                        <label for="tel">Mobile Number:</label>
+                        <input class="w3-input w3-border" type="tel" id="tel" name="tel" placeholder="8 digits">
+                    </div>
+                    <div class="w3-col s12 m12 l12 w3-margin-bottom">
                         <label for="password">New Password:</label>
-                        <input type="password" id="password" name="password">
+                        <input class="w3-input w3-border" type="password" id="password" name="password">
                     </div> 
-                    <div class="w3-col m3">
+                    <div class="w3-col s12 m12 l12 w3-margin-bottom">
                         <label for="password">Confirm New Password:</label>
-                        <input type="password" id="password" name="password">
+                        <input class="w3-input w3-border" type="password" id="password" name="password">
                     </div>
-                    <div class="w3-col m4">
+                    <div class="w3-col s12 m12 l12 w3-margin-bottom">
                         <br>
-                        <input type="submit" value="Register">
+                        <input class="w3-input w3-border" type="submit" value="Register">
                     </div>
+                </div>
             </form>
         </div>
     </div>

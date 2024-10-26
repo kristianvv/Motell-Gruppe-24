@@ -1,6 +1,8 @@
 <?php 
+include 'includes/navbar.php'; 
+include 'includes/modal_login.php';
 
-include 'includes/navbar.php'; ?>
+?>
 
 <!-- Header with background image -->
 <header class="w3-display-container w3-content" style="max-width:1500px;">
