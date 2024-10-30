@@ -53,6 +53,13 @@ include 'includes/modal_login.php'
 <?php
 // Check if form submit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    // Sanitising POST data by trimming and removing special characters from input fields
+
+    foreach ($_POST as &$posts) {
+        $posts = trim(htmlspecialchars(($posts)));
+    }
+
     $username = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
