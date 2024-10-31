@@ -6,7 +6,7 @@ class User {
     protected $name;
     protected $email;
     protected $password;
-    protected role $role; // 'Guest', 'Customer', 'Admin'
+    protected $role; // 'Guest', 'Customer', 'Admin'
 
     // Initialise user 
     public function __construct($name, $email, $password, $role = 'Guest') {
@@ -18,14 +18,13 @@ class User {
 
     // User registration
     public function register($pdo) {
-        // Store to DB
-        $stmt = $pdo->prepare("INSERT INTO userdata (username, email, password) VALUES (?, ?, ?)");
-        $stmt->execute([$this->name, $this->email, $this->password]);
+        $stmt = $pdo->prepare("INSERT INTO User (name, email, password, role) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$this->name, $this->email, $this->password, $this->role]);
     }
 
     // Update user profile
     public function updateProfile($name, $email, $password) {
-        // Logic
+        
     }
 
     // User login
@@ -42,6 +41,12 @@ class User {
     // User logout
     public function logout() {
         // End session logic
+    }
+
+    public static function fetch_user_by_email($pdo, $email) {
+        $stmt = $pdo->prepare("SELECT * FROM User WHERE email = ?");
+        $stmt->execute([$email]);
+        return $stmt->fetch();
     }
 }
 

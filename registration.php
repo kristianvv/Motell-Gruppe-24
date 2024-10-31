@@ -1,9 +1,8 @@
 <?php
 // Include db connection file and user
-// include 'includes/dbconnect.inc.php';
 include 'includes/User.php';
-include 'includes/navbar.php'; 
-include 'includes/modal_login.php'
+include 'includes/navbar.php';
+//include 'includes/modal_login.php' //NB! DETTE SKAPER EN STOR BUG
 ?>
 
 <header class="w3-display-container w3-content" style="max-width:1500px;"> <!-- Overarching container for background image -->
@@ -28,27 +27,24 @@ include 'includes/modal_login.php'
                         <label for="email">Email:</label>
                         <input class="w3-input w3-border" type="email" id="email" name="email" placeholder="john.galt@gmail.com">
                     </div>
+
+                    <!-- Skal mobilnummer være med? Ser at det ikke ligger i bruker-objektet
                     <div class="w3-col s12 m12 l12 w3-margin-bottom">
                         <label for="tel">Mobile Number:</label>
                         <input class="w3-input w3-border" type="tel" id="tel" name="tel" placeholder="8 digits">
                     </div>
+                    -->
                     <div class="w3-col s12 m12 l12 w3-margin-bottom">
                         <label for="password">New Password:</label>
                         <input class="w3-input w3-border" type="password" id="password" name="password">
-                    </div> 
+                    </div>
                     <div class="w3-col s12 m12 l12 w3-margin-bottom">
-                        <label for="password">Confirm New Password:</label>
-                        <input class="w3-input w3-border" type="password" id="password" name="password">
+                        <label for="confirm_password">Confirm New Password:</label>
+                        <input class="w3-input w3-border" type="password" id="confirm_password" name="confirm_password">
                     </div>
                     <div class="w3-col s12 m12 l12 w3-margin-bottom">
                         <br>
                         <input class="w3-input w3-border" type="submit" value="Register">
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</header>
 
 <?php
 // Check if form submit
@@ -60,27 +56,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $posts = trim(htmlspecialchars(($posts)));
     }
 
-    $username = $_POST['username'];
+    $name = $_POST['fname'] . ' ' . $_POST['lname'];
     $email = $_POST['email'];
-    $password = $_POST['password'];
+    $password = ($_POST['password']);
 
     // Validate fields
-    if (empty($username) || empty($email) || empty($password)) {
+    if (empty($name) || empty($email) || empty($password)) {
         echo 'Please fill in all fields';
+        return;
     } else {
-        $user = new User($username, $email, $password); // Create new User
-        $stmt = $pdo->prepare("SELECT email FROM userdata WHERE email = ?"); // Check DB for user based on email
-        $stmt->execute([$email]);
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            echo 'Invalid email';
+            return;
+        }
 
-        if ($stmt->rowCount() > 0) {
-            echo 'Email already exists';
+        if ($password != $_POST['confirm_password']) {
+            echo 'Passwords do not match';
+            return;
+        }
+        $user = new User($name, $email, $password); // Create new User
+        
+        require_once 'includes/dbconnect.inc.php'; 
+        if ($user->fetch_user_by_email($pdo, $email)) { // Check if the email already exists
+            echo 'User with this email already exists';
+            unset($user);
+            exit();
         } else {
-            // Call the register method to store the user in the database
-            $user->register($pdo);
-            echo 'Registration successful';
+            $user->register($pdo); // Register the user
+            echo 'User registered';
+            header("Location: http://localhost/php/Motell-Gruppe-24/index.php");
         }
     }
 }
 ?>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</header>
+
+
 
 <!-- HTML registration form -->
