@@ -1,58 +1,95 @@
-
-
 <?php 
 
-    /* Manages room-related operations, such as checking room availability, 
-    retrieving room details, and updating availability. */ 
-    class Room {
-    private int $roomId;
-    private roomType $roomType; // Single, Double, Suite
-    private string $description;
-    private int $nrAdults; // Max number based on roomType
-    private int $nrChildren; // Max number based on roomType
-    private bool $availability; // Available, Booked
-    private locationDetails $locationDetails; // Floor, closeToElevator, closeToFireEscape, etc.
-    private roomAttributes $roomAttributes; // e.g., Room service, bathroom type (shower/bath)
-    
-    // Initialise room attributes
-    public function __construct($roomId, $roomType, $nrAdults, $nrChildren, $description, $availability, $locationDetails, $roomAttributes) {
+class Room {
+    private ?int $roomId;
+    private ?string $roomType;
+    private ?string $description;
+    private ?int $nrAdults;
+    private ?int $nrChildren;
+    private ?bool $availability;
+    private ?array $locationDetails;
+    private ?array $roomAttributes;
+
+    public function __construct(
+        ?int $roomId = null,
+        ?string $roomType = null,
+        ?int $nrAdults = null,
+        ?int $nrChildren = null,
+        ?string $description = null,
+        ?bool $availability = null,
+        ?array $locationDetails = null,
+        ?array $roomAttributes = null
+    ) {
         $this->roomId = $roomId;
-        $this->roomType = $roomType; // enum class
-        $this->nrAdults = $nrAdults; // Determined by roomtype
-        $this->nrChildren = $nrChildren; // Determined by roomtype
+        $this->roomType = $roomType;
+        $this->nrAdults = $nrAdults;
+        $this->nrChildren = $nrChildren;
         $this->description = $description;
-        $this->availability = $availability; // Standard "available".
-        $this->locationDetails = $locationDetails; // enum class
-        $this->roomAttributes = $roomAttributes; // enum class
+        $this->availability = $availability;
+        $this->locationDetails = $locationDetails;
+        $this->roomAttributes = $roomAttributes;
     }
 
-    // Availability status between two dates (returns current status if optional params null)
-    public function isAvailable($roomId, $from = null, $to = null) {
-        // Logic
+    // Getter methods for each property
+    public function getRoomId(): ?int {
+        return $this->roomId;
     }
 
-    // Set availability status (Admin)
-    public function setAvailability() {
-        // Logic
+    public function getRoomType(): ?string {
+        return $this->roomType;
     }
 
-    // Get room details (retrieve all room details if optional param is null)
-    public function getRoomInfo(int $roomId = null) {
-        // Logic
+    public function getDescription(): ?string {
+        return $this->description;
     }
 
-    // Update description of room
-    public function updateDescription($roomId, $newDescription) {
-        // retrieve room from database and....
-        $this->description = $newDescription;
+    public function getNrAdults(): ?int {
+        return $this->nrAdults;
     }
 
-    // Update room attributes
-    public function updateRoomAttributes($roomId, $newAttributes) {
-        // Logic
+    public function getNrChildren(): ?int {
+        return $this->nrChildren;
     }
+
+    public function getAvailability(): ?bool {
+        return $this->availability;
+    }
+
+    public function getLocationDetails(): ?array {
+        return $this->locationDetails;
+    }
+
+    public function getRoomAttributes(): ?array {
+        return $this->roomAttributes;
+    }
+
+    public function getRoomInfo(int $roomId): ?array {
+        // Assume $pdo is your database connection
+        global $pdo; 
+    
+        $stmt = $pdo->prepare("SELECT * FROM rooms WHERE id = :roomId");
+        $stmt->bindParam(':roomId', $roomId, PDO::PARAM_INT);
+        $stmt->execute();
+        $roomData = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        if ($roomData) {
+            // Map database data to class properties if needed
+            return [
+                'title' => $roomData['title'],
+                'description' => $roomData['description'],
+                'price' => $roomData['price'],
+                'roomType' => $roomData['room_type'],
+                'nrAdults' => $roomData['nr_adults'],
+                'nrChildren' => $roomData['nr_children'],
+                'roomAttributes' => explode(',', $roomData['attributes']),
+                'locationDetails' => explode(',', $roomData['location_details']),
+                'image' => $roomData['image']
+            ];
+        }
+    
+        return null;
+    }
+    
 }
 
-
-// what is file orange?
 ?>

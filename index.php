@@ -34,7 +34,6 @@ include 'includes/modal_login.php';
                 ["image" => "./public/images/double-room.jpg", "title" => "Double Room", "price" => "$149", "description" => "Queen-size bed, 25m2"],
                 ["image" => "./public/images/deluxe-room.jpg", "title" => "Deluxe Room", "price" => "$199", "description" => "King-size bed, 40m2"]
             ];
-            
             foreach($rooms as $room) {
                 include 'includes/room_card.php';
             }
