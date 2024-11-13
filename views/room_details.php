@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<?php include '../includes/navbar.php'; ?>
+<?php include '../includes/dir_navbar.php'; ?>
 
 <!-- Room Details Section -->
 <div class="w3-content" style="max-width:1200px; margin: 20px auto;">

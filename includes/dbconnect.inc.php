@@ -1,4 +1,5 @@
 <?php
+//echo 'Hello World! I am a database connection!' . '<br>'; (for testing purposes)
 
 define('DB_HOST', '127.0.0.1');
 define('DB_USER', 'root');

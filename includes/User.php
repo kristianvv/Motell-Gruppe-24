@@ -1,5 +1,7 @@
 <?php 
 
+//echo "Hello World! I am the User class" . "<br>"; (for testing purposes)
+
 /* The base class for users. Contains login logic and profile management.*/
 class User {
     protected $userId;
@@ -26,13 +28,7 @@ class User {
     public function updateProfile($name, $email, $password) {
         
     }
-
-    // User login
-    public function login($email, $password) {
-        // Start session logic
-        // Timer? => Call logout
-    }
-
+    
     // Fetch profile information
     public function getProfile() {
         // Logic
@@ -41,6 +37,31 @@ class User {
     // User logout
     public function logout() {
         // End session logic
+    }
+
+    public static function brukersøk($search, $pdo) {
+        if (isset($search)) {
+        
+            $search = trim(htmlspecialchars($search));
+            $search = "%$search%";
+
+            $stmt = $pdo->prepare("SELECT * FROM User WHERE name LIKE :search OR email LIKE :search OR role LIKE :search");
+            $stmt->bindParam(':search', $search);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if ($result != null) {
+                return $result;
+            }
+        }
+        else return null;
+    }
+
+    // Fetch user by id
+    public static function fetch_user_by_id($pdo, $id) {
+        $stmt = $pdo->prepare("SELECT * FROM User WHERE id = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch();
     }
 
     public static function fetch_user_by_email($pdo, $email) {

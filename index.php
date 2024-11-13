@@ -1,7 +1,5 @@
 <?php 
-include 'includes/navbar.php'; 
-include 'includes/modal_login.php';
-
+include 'includes/index_navbar.php'; 
 ?>
 
 <!-- Header with background image -->
