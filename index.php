@@ -28,10 +28,10 @@ include 'includes/index_navbar.php';
         <?php 
             // Sample room data. In a real scenario, this could come from a database.
             $rooms = [
-                ["image" => "./public/images/single-room.jpg", "title" => "Single Room", "price" => "$99", "description" => "Single bed, 15m2"],
-                ["image" => "./public/images/double-room.jpg", "title" => "Double Room", "price" => "$149", "description" => "Queen-size bed, 25m2"],
-                ["image" => "./public/images/deluxe-room.jpg", "title" => "Deluxe Room", "price" => "$199", "description" => "King-size bed, 40m2"]
-            ];
+                ["id" => 1, "image" => "./public/images/single-room.jpg", "title" => "Single Room", "price" => "$99", "description" => "Single bed, 15m2"],
+                ["id" => 2, "image" => "./public/images/double-room.jpg", "title" => "Double Room", "price" => "$149", "description" => "Queen-size bed, 25m2"],
+                ["id" => 3, "image" => "./public/images/deluxe-room.jpg", "title" => "Deluxe Room", "price" => "$199", "description" => "King-size bed, 40m2"]
+            ];            
             foreach($rooms as $room) {
                 include 'includes/room_card.php';
             }

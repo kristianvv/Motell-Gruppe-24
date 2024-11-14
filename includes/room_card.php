@@ -9,6 +9,6 @@
             <i class="fa fa-phone"></i> 
             <i class="fa fa-wifi"></i>
         </p>
-        <a href="/views/room_details.php?roomId=<?php echo htmlspecialchars($room['id'] ?? ''); ?>&title=<?php echo urlencode($room['title']); ?>&description=<?php echo urlencode($room['description']); ?>&image=<?php echo urlencode($room['image']); ?>&price=<?php echo urlencode($room['price']); ?>&roomType=Standard&nrAdults=2&nrChildren=0&roomAttributes=WiFi,Pool" class="w3-button w3-block w3-black w3-margin-bottom">Choose Room</a>
+        <a href="/views/room_details.php?roomId=<?php echo urlencode($room['id']); ?>&title=<?php echo urlencode($room['title']); ?>&description=<?php echo urlencode($room['description']); ?>&image=<?php echo urlencode($room['image']); ?>&price=<?php echo urlencode($room['price']); ?>&roomType=Standard&nrAdults=2&nrChildren=0&roomAttributes=WiFi,Pool" class="w3-button w3-block w3-black w3-margin-bottom">Choose Room</a>
     </div>
 </div>
