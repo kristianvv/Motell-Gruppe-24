@@ -23,6 +23,13 @@
                             return false;
                         }
                         break;
+
+                    case 'navn':
+                        if (!preg_match('/^[a-zA-ZæøåÆØÅ\s-]{2,50}$/', $input)) {
+                            echo "<p class = 'error'>" . "vennligst skriv inn et gyldig navn";
+                            return false;
+                        }
+                        break;
                     default:
                         return false;
                 }
