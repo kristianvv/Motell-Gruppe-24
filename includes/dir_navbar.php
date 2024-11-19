@@ -58,6 +58,7 @@ if (session_status() == PHP_SESSION_NONE) {
             <a href="user_view.php" class="w3-bar-item w3-button w3-right w3-mobile">My Account</a>
             <form action="../includes/logout.php" method="POST" style="display: inline;">
                 <button type="submit" class="w3-bar-item w3-button w3-right w3-mobile w3-red">Logout</button>
+            <?php include '../includes/session_check.php'; ?>
             </form>
         <?php else: ?>
             <!-- If the user is not logged in -->
