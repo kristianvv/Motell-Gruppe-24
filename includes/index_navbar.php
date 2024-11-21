@@ -58,7 +58,7 @@ if (session_status() == PHP_SESSION_NONE) {
         <?php if (isset($_SESSION['user_name'])): ?>
             <!-- If the user is logged in -->
             <a href="views/user_view.php" class="w3-bar-item w3-button w3-right w3-mobile">My Account</a>
-            <form action="views/logout.php" method="POST" style="display: inline;">
+            <form action="../includes/logout.php" method="POST" style="display: inline;">
                 <button type="submit" class="w3-bar-item w3-button w3-right w3-mobile w3-red">Logout</button>
             </form>
             <?php include 'includes/session_check.php'; ?>

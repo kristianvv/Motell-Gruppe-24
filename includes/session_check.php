@@ -3,7 +3,9 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-$timeout_duration = 30;
+
+// Set denne ned når prosjektet er ferdig, brukes kún for testing
+$timeout_duration = 3600;
 
 // Check if the user is logged in
 if (isset($_SESSION['user_id'])) {
