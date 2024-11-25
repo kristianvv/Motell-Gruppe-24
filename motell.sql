@@ -57,7 +57,7 @@ INSERT INTO `Rooms` (`roomType`, `adults`, `children`)
   ('Juniorsuite', 4, 4),
   ('Juniorsuite', 4, 4);
 
-ALTER TABLE 'Rooms' ADD COLUMN 'price' INT NOT NULL DEFAULT 0;
-ALTER TABLE 'Rooms' WHERE 'roomType' = 'Enkeltrom' SET 'price' = 500;
-ALTER TABLE 'Rooms' WHERE 'roomType' = 'Dobbeltrom' SET 'price' = 1000;
-ALTER TABLE 'Rooms' WHERE 'roomType' = 'Juniorsuite' SET 'price' = 2000;
+ALTER TABLE `Rooms` ADD COLUMN `price` INT NOT NULL DEFAULT 0;
+UPDATE `Rooms` SET `price` = 500 WHERE `roomType` = 'Enkeltrom';
+UPDATE `Rooms` SET `price` = 1000 WHERE `roomType` = 'Dobbeltrom';
+UPDATE `Rooms` SET `price` = 2000 WHERE `roomType` = 'Juniorsuite';
