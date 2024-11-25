@@ -12,9 +12,10 @@ CREATE TABLE IF NOT EXISTS `User` (
 
 CREATE TABLE IF NOT EXISTS `Rooms` (
   `roomID` INT AUTO_INCREMENT PRIMARY KEY,
-  `roomType` INT NOT NULL,
+  `roomType` VARCHAR(50) NOT NULL,
   `adults` INT NOT NULL,
-  `children` INT NOT NULL
+  `children` INT NOT NULL,
+  `description` VARCHAR(255) DEFAULT NULL
 );
 
 CREATE TABLE IF NOT EXISTS `Booking` (
@@ -27,3 +28,31 @@ CREATE TABLE IF NOT EXISTS `Booking` (
   FOREIGN KEY (`roomID`) REFERENCES `Rooms`(`roomID`),
   FOREIGN KEY (`userID`) REFERENCES `User`(`userID`)
 );
+
+INSERT INTO `Rooms` (`roomType`, `adults`, `children`)
+  VALUES
+  ('Enkeltrom', 1, 0),
+  ('Enkeltrom', 1, 0),
+  ('Enkeltrom', 1, 0),
+  ('Enkeltrom', 1, 0),
+  ('Enkeltrom', 1, 0),
+  ('Enkeltrom', 1, 0),
+  ('Enkeltrom', 1, 0),
+  ('Enkeltrom', 1, 0),
+  ('Enkeltrom', 1, 0),
+  ('Enkeltrom', 1, 0),
+  ('Dobbeltrom', 2, 2),
+  ('Dobbeltrom', 2, 2),
+  ('Dobbeltrom', 2, 2),
+  ('Dobbeltrom', 2, 2),
+  ('Dobbeltrom', 2, 2),
+  ('Dobbeltrom', 2, 2),
+  ('Dobbeltrom', 2, 2),
+  ('Dobbeltrom', 2, 2),
+  ('Dobbeltrom', 2, 2),
+  ('Dobbeltrom', 2, 2),
+  ('Juniorsuite', 4, 4),
+  ('Juniorsuite', 4, 4),
+  ('Juniorsuite', 4, 4),
+  ('Juniorsuite', 4, 4),
+  ('Juniorsuite', 4, 4);
