@@ -27,6 +27,3 @@ CREATE TABLE IF NOT EXISTS `Booking` (
   FOREIGN KEY (`roomID`) REFERENCES `Rooms`(`roomID`),
   FOREIGN KEY (`userID`) REFERENCES `User`(`userID`)
 );
-
-
-CREATE VIEW IF NOT EXISTS `RoomAvailability` AS SELECT
