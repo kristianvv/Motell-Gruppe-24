@@ -43,26 +43,43 @@
     </div>
 </div>
 
-            <!-- PHP Form Validation and Processing -->
-            <?php
+           <!-- PHP Form Validation and Processing -->
+           <?php
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 foreach ($_POST as &$posts) {
                     $posts = trim(htmlspecialchars($posts));
                 }
-
-                $name = $_POST['fname'] . ' ' . $_POST['lname'];
                 $email = $_POST['email'];
                 $password = $_POST['password'];
+                $name = $_POST['fname'] . ' ' . $_POST['lname'];
 
                 if (empty($name) || empty($email) || empty($password)) {
                     echo '<p class="w3-text-red">Please fill in all fields</p>';
-                } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                    echo '<p class="w3-text-red">Invalid email</p>';
-                } elseif ($password != $_POST['confirm_password']) {
+                    exit();
+                }
+                require_once '../includes/validator.inc.php';
+
+                //validering av navn
+                if (!validator::validate($_POST['fname'], 'navn') || !validator::validate($_POST['lname'], 'navn')) {
+                echo '<p class="w3-text-red">Please provide a valid name</p>';
+                exit();
+
+                //validering av email
+                } elseif (!validator::validate($email, 'email')) {
+                    echo '<p class="w3-text-red">Please provide a valid email</p>';
+                    exit();
+                    
+                //validering av passord
+                } elseif (!validator::validate($password, 'passord')) {
+                    echo '<p class="w3-text-red">Please provide a valid password containing at least 9 characters, 2 digits, 1 uppercase letter and 1 special character</p>';
+                    exit();
+                } elseif ($_POST['password'] != $_POST['confirm_password']) {
                     echo '<p class="w3-text-red">Passwords do not match</p>';
+                    exit();
                 } else {
-                    require_once '../includes/User.php';
-                    require_once '../includes/dbconnect.inc.php';
+
+                require_once '../classes/User.php';    
+                require_once '../includes/dbconnect.inc.php';
 
                     if (User::fetch_user_by_email($pdo, $email)) {
                         echo '<p class="w3-text-red">User with this email already exists</p>';
