@@ -10,14 +10,18 @@ CREATE TABLE IF NOT EXISTS `User` (
   `role` varchar(10) DEFAULT NULL
 );
 
+CREATE TABLE IF NOT EXISTS `Rooms` (
+  `roomID` INT AUTO_INCREMENT PRIMARY KEY,
+  `roomType` INT NOT NULL,
+  `adults` INT NOT NULL,
+  `children` INT NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS `Booking` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
-  `userID` int(11) NOT NULL,
-  `roomType` INT NOT NULL,
   `checkInDate` DATE NOT NULL,
   `checkOutDate` DATE NOT NULL,
-  `adults` INT NOT NULL,
-  `children` INT NOT NULL,
   `createdAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (`roomID`) REFERENCES `Rooms`(`roomID`)
   FOREIGN KEY (`userID`) REFERENCES `User`(`userID`)
 );
