@@ -23,7 +23,7 @@
                 <input type="submit" value="Søk">
             </form>
             <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])): ?>
-                <?php require_once '../includes/User.php'; ?>
+                <?php require_once '../classes/User.php'; ?>
                 <?php require_once '../includes/dbconnect.inc.php'; ?>
                 <?php $result = User::brukersøk($_POST['search'], $pdo); ?>
                 <?php if ($result != null): ?>
@@ -34,6 +34,7 @@
                                 <th>Navn</th>
                                 <th>Epost</th>
                                 <th>Rolle</th>
+                                <th>Slett</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -44,13 +45,11 @@
                                     <td><?php echo ($bruker['name']); ?></td>
                                     <td><?php echo ($bruker['email']); ?></td>
                                     <td><?php echo ($bruker['role']); ?></td>
-
-                                    <!-- knapp for å slette bruker
-                                    <form action="" method="POST">
-                                        <input type="hidden" name="id" value="<?php echo $bruker['id']; ?>">
+                                    <!-- knapp for å slette bruker-->
+                                    <form action="../includes/delete_user.php" method="POST">
+                                        <input type="hidden" name="id" value="<?php echo $bruker['userID']; ?>">
                                         <td><input type="submit" name="delete" value="Slett"></td>
                                     </form>
-                                     -->
                                 </tr>
                             <!-- avslutter foreach-->
                             <?php endforeach; ?>

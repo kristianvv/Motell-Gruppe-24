@@ -14,14 +14,14 @@ if (isset($_SESSION['user_id'])) {
         // Session expired
         session_unset(); // Unset session variables
         session_destroy(); // Destroy the session
-        header("Location: login.php?message=Session expired, please log in again.");
+        header("Location: ../views/login.php?message=Session expired, please log in again.");
         exit();
     }
     // Update last activity time
     $_SESSION['last_activity'] = time();
 } else {
     // User is not logged in, redirect to login page
-    header("Location: login.php?message=Please log in to access this page.");
+    header("Location: ../views/login.php?message=Please log in to access this page.");
     exit();
 }
 ?>

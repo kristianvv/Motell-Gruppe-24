@@ -22,15 +22,21 @@
             </form>
 
             <?php
+            /*
+            Setter error_reporting til å vise alle feil og varsler
+            error_reporting(E_ALL);
+            ini_set('display_errors', 1);
+            */
             if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
-                // Initialize failed attempts and last attempt time if not set
+                // Initialiserer antall mislykkede innloggingsforsøk og tidspunktet for det siste mislykkede forsøket der det ikke er satt
                 if (!isset($_SESSION['failed_attempts'])) {
                     $_SESSION['failed_attempts'] = 0;
                     $_SESSION['last_failed_attempt'] = time(); 
                 }
 
-                // Check if too many failed attempts occurred within the last hour
+                // Sjekker om det har vært for mange mislykkede innloggingsforsøk, 
+                // og om det er mindre enn en time siden det siste mislykkede forsøket. Hvist ja, vis feilmelding og avslutt
                 if ($_SESSION['failed_attempts'] >= 3 && (time() - $_SESSION['last_failed_attempt'] < 3600)) {
                     echo '<p>For mange mislykkede innloggingsforsøk. Vennligst prøv igjen om en time.</p>';
                     exit();
@@ -47,13 +53,13 @@
                 $email = $_POST['email'];
                 $password = $_POST['pw'];
 
-                // Check if the user exists in the database
+                //Sjekker om brukeren eksisterer i databasen og om passordet er riktig
                 require '../includes/dbconnect.inc.php';
-                require '../includes/User.php';
+                require '../classes/User.php';
                 $userdata = User::fetch_user_by_email($pdo, $email);
 
                 if ($userdata == null || !password_verify($password, $userdata['password'])) {
-                    // Increment failed attempts and set the last failed attempt time
+                    // Dersom brukeren ikke eksisterer eller passordet er feil, øker vi antall mislykkede forsøk og lagrer tidspunktet for det siste forsøket
                     $_SESSION['failed_attempts']++;
                     $_SESSION['last_failed_attempt'] = time();
                     echo '<p>Invalid login credentials.</p>';
@@ -67,7 +73,7 @@
                 $_SESSION['user_name'] = $userdata['name'];
                 $_SESSION['user_role'] = $userdata['role'];
                 
-                // Redirect based on user role
+                // Basert på brukerens rolle, redirectes brukeren til riktig side
                 if ($_SESSION['user_role'] == 'Admin') {
                     header("Location: admin_view.php");
                     exit();

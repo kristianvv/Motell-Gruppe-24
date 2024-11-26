@@ -55,11 +55,15 @@ if (session_status() == PHP_SESSION_NONE) {
 
         <?php if (isset($_SESSION['user_name'])): ?>
             <!-- If the user is logged in -->
+            <?php include '../includes/session_check.php'; ?>
             <a href="user_view.php" class="w3-bar-item w3-button w3-right w3-mobile">My Account</a>
             <form action="../includes/logout.php" method="POST" style="display: inline;">
                 <button type="submit" class="w3-bar-item w3-button w3-right w3-mobile w3-red">Logout</button>
-            <?php include '../includes/session_check.php'; ?>
+            <!-- If the user is an admin-->
             </form>
+            <?php if ($_SESSION['user_role'] == 'Admin'): ?>
+                <a href="../views/admin_view.php" class="w3-bar-item w3-button w3-right w3-mobile">Admin panel</a>
+            <?php endif; ?>
         <?php else: ?>
             <!-- If the user is not logged in -->
             <a href="login.php" class="w3-bar-item w3-button w3-right w3-mobile w3-red">Login</a>

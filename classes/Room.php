@@ -1,46 +1,36 @@
 <?php 
 
 class Room {
-    private ?int $roomId;
-    private ?string $roomType;
-    private ?string $description;
-    private ?int $nrAdults;
-    private ?int $nrChildren;
-    private ?bool $availability;
-    private ?array $locationDetails;
-    private ?array $roomAttributes;
+    private ?int $roomID;              // Matches `roomID` in the table
+    private ?string $roomType;         // Matches `roomType`
+    private ?int $nrAdults;            // Matches `adults`
+    private ?int $nrChildren;          // Matches `children`
+    private ?string $description;      // Matches `description`
+    private ?float $price;             // Matches `price`
 
     public function __construct(
-        ?int $roomId = null,
+        ?int $roomID = null,
         ?string $roomType = null,
         ?int $nrAdults = null,
         ?int $nrChildren = null,
         ?string $description = null,
-        ?bool $availability = null,
-        ?array $locationDetails = null,
-        ?array $roomAttributes = null
+        ?float $price = null
     ) {
-        $this->roomId = $roomId;
+        $this->roomID = $roomID;
         $this->roomType = $roomType;
         $this->nrAdults = $nrAdults;
         $this->nrChildren = $nrChildren;
         $this->description = $description;
-        $this->availability = $availability;
-        $this->locationDetails = $locationDetails;
-        $this->roomAttributes = $roomAttributes;
+        $this->price = $price;
     }
 
     // Getter methods for each property
-    public function getRoomId(): ?int {
-        return $this->roomId;
+    public function getRoomID(): ?int {
+        return $this->roomID;
     }
 
     public function getRoomType(): ?string {
         return $this->roomType;
-    }
-
-    public function getDescription(): ?string {
-        return $this->description;
     }
 
     public function getNrAdults(): ?int {
@@ -51,45 +41,80 @@ class Room {
         return $this->nrChildren;
     }
 
-    public function getAvailability(): ?bool {
-        return $this->availability;
+    public function getDescription(): ?string {
+        return $this->description;
     }
 
-    public function getLocationDetails(): ?array {
-        return $this->locationDetails;
+    public function getPrice(): ?float {
+        return $this->price;
     }
 
-    public function getRoomAttributes(): ?array {
-        return $this->roomAttributes;
-    }
-
-    public function getRoomInfo(int $roomId): ?array {
-        // Assume $pdo is your database connection
-        global $pdo; 
-    
-        $stmt = $pdo->prepare("SELECT * FROM rooms WHERE id = :roomId");
+    //Metode som henter ut et rom basert på romID. Returnerer et Room-objekt eller false hvis rommet ikke finnes
+    public static function get_room_by_id(int $roomId, PDO $pdo): Room|bool {
+        $stmt = $pdo->prepare("SELECT * FROM Rooms WHERE roomID = :roomId");
         $stmt->bindParam(':roomId', $roomId, PDO::PARAM_INT);
         $stmt->execute();
         $roomData = $stmt->fetch(PDO::FETCH_ASSOC);
     
         if ($roomData) {
-            // Map database data to class properties if needed
-            return [
-                'title' => $roomData['title'],
-                'description' => $roomData['description'],
-                'price' => $roomData['price'],
-                'roomType' => $roomData['room_type'],
-                'nrAdults' => $roomData['nr_adults'],
-                'nrChildren' => $roomData['nr_children'],
-                'roomAttributes' => explode(',', $roomData['attributes']),
-                'locationDetails' => explode(',', $roomData['location_details']),
-                'image' => $roomData['image']
-            ];
+            return new Room(
+                $roomData['roomID'],
+                $roomData['roomType'],
+                $roomData['adults'],
+                $roomData['children'],
+                $roomData['description']
+            );
         }
-    
-        return null;
+        return false;
     }
-    
-}
 
+    /* 
+    
+    Metode som lagrer et rom i databasen. Returnerer true hvis lagringen var vellykket, false ellers.
+    Fjernet muligheten til å opprette nytt rom da det kun skal finnes 25 rom i data
+    
+    */
+    public function save(PDO $pdo): bool {
+        // Check if the room ID exists to ensure we're updating an existing room
+        if ($this->roomID) {
+            // Update existing room
+            $stmt = $pdo->prepare("
+                UPDATE Rooms SET
+                    roomType = :roomType,
+                    adults = :nrAdults,
+                    children = :nrChildren,
+                    description = :description
+                WHERE roomID = :roomId
+            ");
+            $stmt->bindParam(':roomType', $this->roomType, PDO::PARAM_STR);
+            $stmt->bindParam(':nrAdults', $this->nrAdults, PDO::PARAM_INT);
+            $stmt->bindParam(':nrChildren', $this->nrChildren, PDO::PARAM_INT);
+            $stmt->bindParam(':description', $this->description, PDO::PARAM_STR);
+    
+            // Execute the query and return whether it was successful
+            return $stmt->execute();
+        } else {
+            // No room ID provided; room update cannot proceed
+            return false;
+        }
+    }
+    public static function get_all_rooms(PDO $pdo): array {
+        $stmt = $pdo->prepare("SELECT * FROM Rooms");
+        $stmt->execute();
+        $roomsData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+        $rooms = [];
+        foreach ($roomsData as $roomData) {
+            $rooms[] = new Room(
+                $roomData['roomID'],
+                $roomData['roomType'],
+                $roomData['adults'],
+                $roomData['children'],
+                $roomData['description'],
+                $roomData['price']
+            );
+        }
+        return $rooms;
+    }
+}
 ?>

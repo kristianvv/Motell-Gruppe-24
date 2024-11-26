@@ -19,24 +19,9 @@ class User {
     }
 
     // User registration
-    public function register($pdo) {
+    public function register(PDO $pdo) {
         $stmt = $pdo->prepare("INSERT INTO User (name, email, password, role) VALUES (?, ?, ?, ?)");
         $stmt->execute([$this->name, $this->email, $this->password, $this->role]);
-    }
-
-    // Update user profile
-    public function updateProfile($name, $email, $password) {
-        
-    }
-    
-    // Fetch profile information
-    public function getProfile() {
-        // Logic
-    }
-
-    // User logout
-    public function logout() {
-        // End session logic
     }
 
     public static function brukersøk($search, $pdo) {
@@ -68,6 +53,37 @@ class User {
         $stmt = $pdo->prepare("SELECT * FROM User WHERE email = ?");
         $stmt->execute([$email]);
         return $stmt->fetch();
+    }
+
+    public static function fetch_user_by_token($pdo, $token) {
+        $stmt = $pdo->prepare("SELECT * FROM User WHERE password_reset_token = ?");
+        $stmt->execute([$token]);
+        return $stmt->fetch();
+    }
+
+    public static function update_password($pdo, $email, $password) {
+        $stmt = $pdo->prepare("UPDATE User SET password = ? WHERE email = ?");
+        $stmt->execute([$password, $email]);
+    }
+
+    public static function invalidate_reset_token($pdo, $email) {
+        $stmt = $pdo->prepare("UPDATE User SET password_reset_token = NULL, token_expiration = NULL WHERE email = ?");
+        $stmt->execute([$email]);
+    }
+
+    public static function set_reset_token($pdo, $email, $token) {
+        $stmt = $pdo->prepare("UPDATE User SET password_reset_token = ?, token_expiration = ? WHERE email = ?");
+        $stmt->execute([$token, time() + 3600, $email]);
+    }
+
+    public static function get_all_emails($pdo) {
+        $stmt = $pdo->prepare("SELECT email FROM User");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_COLUMN);
+    }
+    public static function delete_user($pdo, $id) {
+        $stmt = $pdo->prepare("DELETE FROM User WHERE userID = ?");
+        $stmt->execute([$id]);
     }
 }
 
