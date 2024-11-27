@@ -38,31 +38,31 @@
                 switch ($type) {
                     case 'roomType':
                         if (!preg_match('/^[a-zA-ZæøåÆØÅ\s-]{2,50}$/', $input)) {
-                            echo '<p style="color: red;">Invalid room type description</p>';
+                            echo '<p style="color: red;">Invalid room type description, no changes made.</p>';
                             return false;
                         }
                         break;
                     case 'nrAdults':
                         if (!preg_match('/^[1-8]{1}$/', $input)) {
-                            echo '<p style="color: red;">Invalid number of adults</p>';
+                            echo '<p style="color: red;">Invalid number of adults, no changes made.</p>';
                             return false;
                         }
                         break;
                     case 'nrChildren':
                         if (!preg_match('/^[0-9]{1}$/', $input)) {
-                            echo '<p style="color: red;">Invalid number of children</p>';
+                            echo '<p style="color: red;">Invalid number of children, no changes made.</p>';
                             return false;
                         }
                         break;
                     case 'description':
                         if (!preg_match('/^[a-zA-ZæøåÆØÅ\s-]{2,50}$/', $input)) {
-                            echo '<p style="color: red;">Invalid room description</p>';
+                            echo '<p style="color: red;">Invalid room description, no changes made.</p>';
                             return false;
                         }
                         break;
                     case 'price':
                         if (!preg_match('/^[0-9]{1,5}$/', $input)) {
-                            echo '<p style="color: red;">Invalid price</p>';
+                            echo '<p style="color: red;">Invalid price, no changes made.</p>';
                             return false;
                         }
                         break;

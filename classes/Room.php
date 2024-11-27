@@ -62,7 +62,8 @@ class Room {
                 $roomData['roomType'],
                 $roomData['adults'],
                 $roomData['children'],
-                $roomData['description']
+                $roomData['description'],
+                $roomData['price']
             );
         }
         return false;
@@ -83,14 +84,18 @@ class Room {
                     roomType = :roomType,
                     adults = :nrAdults,
                     children = :nrChildren,
-                    description = :description
+                    description = :description,
+                    price = :price
                 WHERE roomID = :roomId
             ");
+
             $stmt->bindParam(':roomType', $this->roomType, PDO::PARAM_STR);
             $stmt->bindParam(':nrAdults', $this->nrAdults, PDO::PARAM_INT);
             $stmt->bindParam(':nrChildren', $this->nrChildren, PDO::PARAM_INT);
             $stmt->bindParam(':description', $this->description, PDO::PARAM_STR);
-    
+            $stmt->bindParam(':price', $this->price, PDO::PARAM_STR);
+            $stmt->bindParam(':roomId', $this->roomID, PDO::PARAM_INT);
+
             // Execute the query and return whether it was successful
             return $stmt->execute();
         } else {
