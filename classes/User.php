@@ -24,7 +24,7 @@ class User {
         $stmt->execute([$this->name, $this->email, $this->password, $this->role]);
     }
 
-    public static function brukersøk($search, $pdo) {
+    public static function search_users($pdo, $search) {
         if (isset($search)) {
         
             $search = trim(htmlspecialchars($search));
@@ -66,6 +66,11 @@ class User {
         $stmt->execute([$password, $email]);
     }
 
+    public static function update_role($pdo, $id, $role) {
+        $stmt = $pdo->prepare("UPDATE User SET role = ? WHERE userID = ?");
+        $stmt->execute([$role, $id]);
+    }
+
     public static function invalidate_reset_token($pdo, $email) {
         $stmt = $pdo->prepare("UPDATE User SET password_reset_token = NULL, token_expiration = NULL WHERE email = ?");
         $stmt->execute([$email]);
@@ -84,6 +89,11 @@ class User {
     public static function delete_user($pdo, $id) {
         $stmt = $pdo->prepare("DELETE FROM User WHERE userID = ?");
         $stmt->execute([$id]);
+    }
+    public static function fetch_all($pdo) {
+        $stmt = $pdo->prepare("SELECT * FROM User");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 
