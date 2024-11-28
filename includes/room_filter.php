@@ -6,7 +6,7 @@ $adults = htmlspecialchars($_POST['adults'] ?? 1);
 $children = htmlspecialchars($_POST['children'] ?? 0);
 ?>
 
-<form action="" method="post">
+<form action="" method="post" >
     <div class="w3-row-padding">
         <div class="w3-col m3">
             <label><i class="fa fa-calendar-o"></i> Check In</label>
@@ -18,11 +18,11 @@ $children = htmlspecialchars($_POST['children'] ?? 0);
         </div>
         <div class="w3-col m2">
             <label><i class="fa fa-male"></i> Adults</label>
-            <input class="w3-input w3-border" type="number" name="adults" value="<?php echo $adults; ?>" min="1" max="6" required>
+            <input class="w3-input w3-border" type="number" name="adults" value="<?php echo $adults; ?>" min="1" max="4" required>
         </div>
         <div class="w3-col m2">
             <label><i class="fa fa-child"></i> Children</label>
-            <input class="w3-input w3-border" type="number" name="children" value="<?php echo $children; ?>" min="0" max="6" required>
+            <input class="w3-input w3-border" type="number" name="children" value="<?php echo $children; ?>" min="0" max="4" required>
         </div>
         <div class="w3-col m2" id="filter-search">
             <label><i class="fa fa-search"></i> Search</label>
