@@ -1,4 +1,4 @@
-<?php include '../includes/dir_navbar.php'; ?>
+<?php include '../includes/navbar.php'; ?>
 
 <div class="center-container">
     <div class="login-form-container w3-padding">

@@ -1,11 +1,9 @@
 <?php
-
 // Start session om det ikke allerede er startet
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -43,30 +41,27 @@ if (session_status() == PHP_SESSION_NONE) {
             max-height: 800px;
         }
     </style>
-    </style>
 </head>
 <body class="w3-light-grey">
-    <!-- Navigation Bar -->
     <div class="w3-bar w3-white w3-large">
-        <a href="index.php" class="w3-bar-item w3-button w3-red w3-mobile">
+        <a href="/Motell-Gruppe-24/index.php" class="w3-bar-item w3-button w3-red w3-mobile">
             <i class="fa fa-bed w3-margin-right"></i>Motel Booking
         </a>
-        <a href="./index.php#rooms" class="w3-bar-item w3-button w3-mobile">Rooms</a>
-        <a href="#about" class="w3-bar-item w3-button w3-mobile">Contact</a>
-
-        <?php if (isset($_SESSION['user_name'])): ?>
-            <!-- If the user is logged in -->
-            <a href="views/user_view.php" class="w3-bar-item w3-button w3-right w3-mobile">My Account</a>
-            <form action="../includes/logout.php" method="POST" style="display: inline;">
-                <button type="submit" class="w3-bar-item w3-button w3-right w3-mobile w3-red">Logout</button>
-            </form>
-            <!-- If the user is an admin-->
-            <?php if ($_SESSION['user_role'] == 'Admin'): ?>
-                <a href="views/admin_view.php" class="w3-bar-item w3-button w3-right w3-mobile">Admin panel</a>
-            <?php endif; ?>
+        <?php if (isset($_SESSION['user_name']) && !isset($_SESSION['flash_message'])): ?>
+            <!-- Display if the user is logged in -->
+            <a href="/Motell-Gruppe-24/index.php#rooms" class="w3-bar-item w3-button w3-mobile">Rooms</a>
+            <a href="/Motell-Gruppe-24/index.php#about" class="w3-bar-item w3-button w3-mobile">Contact</a>
+            <a href="/Motell-Gruppe-24/views/user_view.php" class="w3-bar-item w3-button w3-right w3-mobile">My Account</a> <!-- Fine from index, not from views/userview -->
+            <a href="/Motell-Gruppe-24/includes/logout.php" class="w3-bar-item w3-button w3-right w3-mobile w3-red">Logout</a>
+            <?php include 'includes/session_check.php'; ?>
         <?php else: ?>
-            <!-- If the user is not logged in -->
-            <a href="views/login.php" class="w3-bar-item w3-button w3-right w3-mobile w3-red">Login</a>
-            <a href="views/registration.php" class="w3-bar-item w3-button w3-right w3-mobile w3-red">Register</a>
+            <!-- Display if the user is logged in -->
+            <a href="/Motell-Gruppe-24/index.php#rooms" class="w3-bar-item w3-button w3-mobile">Rooms</a>
+            <a href="/Motell-Gruppe-24/index.php#about" class="w3-bar-item w3-button w3-mobile">Contact</a>
+            <a href="/Motell-Gruppe-24/views/registration.php" class="w3-bar-item w3-button w3-right w3-mobile w3-red">Register</a>
+            <a href="/Motell-Gruppe-24/views/login.php" class="w3-bar-item w3-button w3-right w3-mobile w3-red">Login</a>
         <?php endif; ?>
     </div>
+</body>
+
+

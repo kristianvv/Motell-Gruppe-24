@@ -1,4 +1,4 @@
-<?php include '../includes/dir_navbar.php'; ?>
+<?php include '../includes/navbar.php'; ?>
 <div class="w3-display-left w3-padding w3-col l6 m8"> <!-- Container for registration form -->
     <div class="w3-container w3-red"> <!-- Title container -->
         <h2><i class="fa fa-bed w3-margin-right"></i>Registration</h2>

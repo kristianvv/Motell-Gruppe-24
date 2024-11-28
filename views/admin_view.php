@@ -1,4 +1,4 @@
-<?php include '../includes/dir_navbar.php'; ?>
+<?php include '../includes/navbar.php'; ?>
 <?php require '../includes/authorize_admin.php'; ?>
 
 <div class="w3-container w3-center" style="margin-top: 50px;">

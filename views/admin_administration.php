@@ -1,4 +1,4 @@
-<?php include '../includes/dir_navbar.php'; ?>
+<?php include '../includes/navbar.php'; ?>
 <?php include '../includes/authorize_admin.php'; ?>
 
 <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px">

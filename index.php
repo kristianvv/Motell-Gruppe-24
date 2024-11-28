@@ -1,8 +1,4 @@
-<?php 
-include 'includes/index_navbar.php'; 
-include '../includes/dir_navbar.php';
-session_start(); 
-?>
+<?php include 'includes/navbar.php';?>
 
 <!-- Header with background image -->
 <header class="w3-display-container w3-content" style="max-width:1500px;">

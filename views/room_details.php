@@ -34,7 +34,7 @@ $roomAttributes = implode(', ', explode(',', $_GET['roomAttributes'] ?? ''));
 </head>
 <body>
 
-<?php include '../includes/dir_navbar.php'; ?>
+<?php include '../includes/navbar.php'; ?>
 
 <div class="w3-content" style="max-width:1200px; margin: 20px auto;">
     <header class="w3-container w3-center w3-padding-32 w3-red">

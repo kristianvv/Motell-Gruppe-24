@@ -1,4 +1,4 @@
-<?php include '../includes/dir_navbar.php'; ?>
+<?php include '../includes/navbar.php'; ?>
 
 <?php 
 //Sjekk om bruker er logget inn. Trenger ikke sjekke rolle da alle brukere skal kunne se denne siden

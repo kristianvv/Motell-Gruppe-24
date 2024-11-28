@@ -1,3 +1,3 @@
-<?php include ('../includes/dir_navbar.php'); ?>
+<?php include ('../includes/navbar.php'); ?>
 
 <?php ('../includes/authorize.php'); ?>

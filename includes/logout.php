@@ -1,26 +1,13 @@
 <!-- Logout page -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Logout</title>
-</head>
-<body>
-    <h1>Logout</h1>
-    <p>You have been logged out.</p>
-    <a href="../index.php">Home</a>
-</html>
+ <?php
 
+if (session_status() == PHP_SESSION_ACTIVE) { // check for active session
+    session_unset(); // unset all session variables. or with this => $_SESSION = [];
+    session_destroy(); // terminate active session
+}
 
-<?php
-// Start the session
-session_start();
-
-// Unset all session variables
-$_SESSION = [];
-
-// Destroy the session
-session_destroy();
-
+session_start(); // Start new session for flash message
+$_SESSION['flash_message'] = "You have been successfully logged out.";
+header("Location: ../index.php"); // redirect after logout 
 exit();
 ?>
