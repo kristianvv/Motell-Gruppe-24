@@ -47,10 +47,14 @@ if (session_status() == PHP_SESSION_NONE) {
         <a href="/Motell-Gruppe-24/index.php" class="w3-bar-item w3-button w3-red w3-mobile">
             <i class="fa fa-bed w3-margin-right"></i>Motel Booking
         </a>
-        <?php if (isset($_SESSION['user_name']) && !isset($_SESSION['flash_message'])): ?>
+        <?php if (isset($_SESSION['user_id'])): ?>
             <!-- Display if the user is logged in -->
             <a href="/Motell-Gruppe-24/index.php#rooms" class="w3-bar-item w3-button w3-mobile">Rooms</a>
             <a href="/Motell-Gruppe-24/index.php#about" class="w3-bar-item w3-button w3-mobile">Contact</a>
+            <!-- If the user is an admin -->
+            <?php if ($_SESSION['user_role'] == 'Admin'): ?>
+                <a href="/Motell-Gruppe-24/views/admin_view.php" class="w3-bar-item w3-button w3-right w3-mobile">Admin panel</a>
+            <?php endif; ?>
             <a href="/Motell-Gruppe-24/views/user_view.php" class="w3-bar-item w3-button w3-right w3-mobile">My Account</a> <!-- Fine from index, not from views/userview -->
             <a href="/Motell-Gruppe-24/includes/logout.php" class="w3-bar-item w3-button w3-right w3-mobile w3-red">Logout</a>
             <?php include 'includes/session_check.php'; ?>

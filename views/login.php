@@ -17,7 +17,7 @@
                 </div>
                 <div class="w3-margin-bottom">
                     <input class="w3-button w3-block w3-green" type="submit" value="Login">
-                    <span class="psw">Forgot <a href="#">password?</a></span>
+                    <span class="psw">Forgot <a href="forgot_password.php">password?</a></span>
                 </div>
             </form>
 

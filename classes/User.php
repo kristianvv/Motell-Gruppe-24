@@ -95,6 +95,23 @@ class User {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public static function get_user_by_id($pdo, $id): User|bool {
+        $stmt = $pdo->prepare("SELECT * FROM User WHERE userID = ?");
+        $stmt->execute([$id]);
+        $userdata = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($userdata) {
+            return new User(
+                $userdata['name'],
+                $userdata['email'],
+                $userdata['password'],
+                $userdata['role']
+            );
+        } else {
+            return false;
+        }
+    }
 }
 
 ?>

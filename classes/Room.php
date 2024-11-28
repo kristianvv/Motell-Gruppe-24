@@ -121,5 +121,11 @@ class Room {
         }
         return $rooms;
     }
+
+    //til index
+    public static function getAllRooms(PDO $pdo): array {
+        $stmt = $pdo->query("SELECT * FROM Rooms");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>
