@@ -58,6 +58,9 @@ INSERT INTO `Rooms` (`roomType`, `adults`, `children`)
   ('Juniorsuite', 4, 4);
 
 ALTER TABLE `Rooms` ADD COLUMN `price` INT NOT NULL DEFAULT 0;
+ALTER TABLE users ADD COLUMN password_reset_token VARCHAR(255) NULL;
+ALTER TABLE users ADD COLUMN token_expiration INT NULL;
+
 UPDATE `Rooms` SET `price` = 500 WHERE `roomType` = 'Enkeltrom';
 UPDATE `Rooms` SET `price` = 1000 WHERE `roomType` = 'Dobbeltrom';
 UPDATE `Rooms` SET `price` = 2000 WHERE `roomType` = 'Juniorsuite';
