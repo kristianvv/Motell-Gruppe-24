@@ -1,6 +1,7 @@
 <?php
 
 class Booking {
+    private int $id;
     private int $roomId;
     private int $roomType;
     private int $userId;
@@ -10,7 +11,8 @@ class Booking {
     private int $children;
 
     // Constructor
-    public function __construct($roomId, $roomType, $userId, $fromDate, $toDate, $adults, $children) {
+    public function __construct($id = null, $roomId, $roomType, $userId, $fromDate, $toDate, $adults, $children) {
+        $this->id = $id;
         $this->roomId = $roomId;
         $this->roomType = $roomType;
         $this->userId = $userId;
@@ -86,6 +88,51 @@ class Booking {
             echo "Error fetching available rooms: " . $e->getMessage();
             return [];
         }
+    }
+
+    // Get all bookings
+    public static function fetch_all_bookings($pdo) {
+        try {
+            $stmt = $pdo->query("SELECT Booking.id, Booking.roomID, Booking.userID, Booking.checkInDate, Booking.checkOutDate, Booking.createdAt, Rooms.adults, Rooms.roomType, Rooms.children
+                                 FROM Booking, Rooms
+                                 WHERE Booking.roomID = Rooms.roomID
+                                 ORDER BY Booking.createdAt DESC");
+
+           return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+            echo "Error fetching bookings: " . $e->getMessage();
+            return [];
+        }
+    }
+
+    // Getters
+    public function get_room_id() {
+        return $this->roomId;
+    }
+
+    public function get_room_type() {
+        return $this->roomType;
+    }
+
+    public function get_user_id() {
+        return $this->userId;
+    }
+
+    public function get_from_date() {
+        return $this->fromDate;
+    }
+
+    public function get_to_date() {
+        return $this->toDate;
+    }
+
+    public function get_adults() {
+        return $this->adults;
+    }
+
+    public function get_children() {
+        return $this->children;
     }
 }
 ?>

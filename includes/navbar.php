@@ -9,7 +9,7 @@ if (session_status() == PHP_SESSION_NONE) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>W3.CSS Template</title>
+    <title>Motell-Gruppe-24</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -57,7 +57,7 @@ if (session_status() == PHP_SESSION_NONE) {
             <?php endif; ?>
             <a href="/Motell-Gruppe-24/views/user_view.php" class="w3-bar-item w3-button w3-right w3-mobile">My Account</a> <!-- Fine from index, not from views/userview -->
             <a href="/Motell-Gruppe-24/includes/logout.php" class="w3-bar-item w3-button w3-right w3-mobile w3-red">Logout</a>
-            <?php include 'includes/session_check.php'; ?>
+            <?php 'session_check.php'; ?>
         <?php else: ?>
             <!-- Display if the user is logged in -->
             <a href="/Motell-Gruppe-24/index.php#rooms" class="w3-bar-item w3-button w3-mobile">Rooms</a>
@@ -67,5 +67,3 @@ if (session_status() == PHP_SESSION_NONE) {
         <?php endif; ?>
     </div>
 </body>
-
-
