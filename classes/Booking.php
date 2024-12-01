@@ -11,7 +11,7 @@ class Booking {
     private int $children;
 
     // Constructor
-    public function __construct($id = null, $roomId, $roomType, $userId, $fromDate, $toDate, $adults, $children) {
+    public function __construct($id = null, $roomId = null, $roomType, $userId, $fromDate, $toDate, $adults, $children) {
         $this->id = $id;
         $this->roomId = $roomId;
         $this->roomType = $roomType;
@@ -22,30 +22,24 @@ class Booking {
         $this->children = $children;
     }
 
-    // Book a room
-    public function bookRoom($pdo) {
-        if (!$this->isRoomAvailable($pdo, $this->roomId, $this->fromDate, $this->toDate)) {
-            echo "Room not available for the selected dates.";
+    // Book a room by type
+    public function bookRoomByType($pdo) {
+        $roomRange = $this->getRoomRangeByType($this->roomType);
+
+        if (!$roomRange) {
+            echo "Invalid room type.";
             return false;
         }
 
-        try {
-            $stmt = $pdo->prepare("INSERT INTO bookings (room_id, room_type, user_id, from_date, to_date, adults, children) 
-                                   VALUES (:roomId, :roomType, :userId, :fromDate, :toDate, :adults, :children)");
-
-            $stmt->bindParam(':roomId', $this->roomId, PDO::PARAM_INT);
-            $stmt->bindParam(':roomType', $this->roomType, PDO::PARAM_INT);
-            $stmt->bindParam(':userId', $this->userId, PDO::PARAM_INT);
-            $stmt->bindParam(':fromDate', $this->fromDate);
-            $stmt->bindParam(':toDate', $this->toDate);
-            $stmt->bindParam(':adults', $this->adults, PDO::PARAM_INT);
-            $stmt->bindParam(':children', $this->children, PDO::PARAM_INT);
-
-            return $stmt->execute();
-        } catch (PDOException $e) {
-            echo "Booking error: " . $e->getMessage();
-            return false;
+        foreach (range($roomRange['start'], $roomRange['end']) as $roomId) {
+            if ($this->isRoomAvailable($pdo, $roomId, $this->fromDate, $this->toDate)) {
+                $this->roomId = $roomId; // Assign the available room
+                return $this->bookRoom($pdo); // Attempt booking
+            }
         }
+
+        echo "No rooms available for the selected type and dates.";
+        return false;
     }
 
     // Check room availability
@@ -63,6 +57,40 @@ class Booking {
         } catch (PDOException $e) {
             echo "Error checking availability: " . $e->getMessage();
             return false;
+        }
+    }
+
+    // Book a specific room
+    public function bookRoom($pdo) {
+        try {
+            $stmt = $pdo->prepare("INSERT INTO bookings (room_id, room_type, user_id, from_date, to_date, adults, children) 
+                                   VALUES (:roomId, :roomType, :userId, :fromDate, :toDate, :adults, :children)");
+
+            $stmt->bindParam(':roomId', $this->roomId, PDO::PARAM_INT);
+            $stmt->bindParam(':roomType', $this->roomType, PDO::PARAM_INT);
+            $stmt->bindParam(':userId', $this->userId, PDO::PARAM_INT);
+            $stmt->bindParam(':fromDate', $this->fromDate);
+            $stmt->bindParam(':toDate', $this->toDate);
+            $stmt->bindParam(':adults', $this->adults, PDO::PARAM_INT);
+            $stmt->bindParam(':children', $this->children, PDO::PARAM_INT);
+
+            if ($stmt->execute()) {
+                echo "Booking successful for Room ID {$this->roomId}!";
+                return true;
+            }
+        } catch (PDOException $e) {
+            echo "Booking error: " . $e->getMessage();
+        }
+        return false;
+    }
+
+    // Get room ID range by type
+    private function getRoomRangeByType($roomType) {
+        switch ($roomType) {
+            case 'enkeltrom': return ['start' => 1, 'end' => 10];
+            case 'dobbeltrom': return ['start' => 11, 'end' => 20];
+            case 'juniorsuite': return ['start' => 21, 'end' => 25];
+            default: return null;
         }
     }
 

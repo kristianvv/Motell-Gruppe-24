@@ -34,9 +34,9 @@
 
             // Room filtering logic
             $rooms = [
-                ["id" => 1, "image" => "./public/images/single-room.jpg", "title" => "Single Room", "price" => "$99", "description" => "Single bed, 15m2", "type" => "enkeltrom"],
-                ["id" => 2, "image" => "./public/images/double-room.jpg", "title" => "Double Room", "price" => "$149", "description" => "Queen-size bed, 25m2", "type" => "dobbeltrom"],
-                ["id" => 3, "image" => "./public/images/deluxe-room.jpg", "title" => "Junior Suite", "price" => "$199", "description" => "King-size bed, 40m2", "type" => "junior suite"]
+                ["id" => 1, "image" => "./public/images/enkeltrom.jpg", "title" => "Single Room", "price" => "$99", "description" => "Single bed, 15m2", "type" => "enkeltrom"],
+                ["id" => 2, "image" => "./public/images/dobbeltrom.jpg", "title" => "Double Room", "price" => "$149", "description" => "Queen-size bed, 25m2", "type" => "dobbeltrom"],
+                ["id" => 3, "image" => "./public/images/juniorsuite.jpg", "title" => "Junior Suite", "price" => "$199", "description" => "King-size bed, 40m2", "type" => "junior suite"]
             ];
 
             $filtered_rooms = [];
