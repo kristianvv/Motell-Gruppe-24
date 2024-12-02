@@ -3,36 +3,28 @@
 <?php 
 //Sjekk om bruker er logget inn. Trenger ikke sjekke rolle da alle brukere skal kunne se denne siden
 if (!isset($_SESSION['user_name'])) {
-    header("Location: ../includes/403.php");
+    header("Location: ../includes/401.php");
     exit();
 }
-
 ?>
     <?php if (isset($_SESSION['user_name'])): ?>
-        <h1>Velkommen til din side, <?php echo htmlspecialchars($_SESSION['user_name']); ?>! </h1>
-        <h3>Her kan du se dine bestillinger og endre brukerinformasjon</h3>
-        <div class="form-container">
-                <form action="" method="POST">
-                    <label for="username">Rediger brukernavn</label>
-                    <input type="text" step="any" id="username" name="username" placeholder="<?php echo $_SESSION['user_name'];?>" value="<?php echo $_SESSION['user_name'];?>" required>
-                    <input type="submit" value="Oppdater navn">
-                </form>
-                    <br>
-                <form action="" method="POST">
-                    <label for="email">Rediger epostadresse</label>
-                    <input type="email" step="any" id="email" name="email" placeholder ="<?php echo $_SESSION['user_email'];?>" value ="<?php echo $_SESSION['user_email'];?>" required>
-                    <input type="submit" value="Oppdater epost">
-                </form>
-                    <br>
-
-                    <!-- Ikke ferdig implementert 
-                <form action="" method="POST">
-                    <label for="password">Rediger Passord</label>
-                    <input type="tlf" id="password" name="password" placeholder ="password" value ="password" required>
-                    <input type="submit" value="Oppdater passord">
-                </form>
-                -->
+        
+        <div class="w3-container w3-center" style="margin-top: 50px;">
+        
+            <div class="w3-card w3-white w3-hover-shadow" style="display: inline-block; margin: 20px; width: 300px; padding: 20px; border-radius: 8px;">
+                <i class="fa fa-id-card w3-text-red" style="font-size: 50px; margin-bottom: 16px;"></i>
+                <h3>User Details</h3>
+                <a href="user_details.php" class="w3-button w3-red w3-margin-top">Go to User Details</a>
             </div>
+
+    
+        <div class="w3-card w3-white w3-hover-shadow" style="display: inline-block; margin: 20px; width: 300px; padding: 20px; border-radius: 8px;">
+            <i class="fa fa-calendar w3-text-red" style="font-size: 50px; margin-bottom: 16px;"></i>
+            <h3>My Bookings</h3>
+            <a href="my_bookings.php" class="w3-button w3-red w3-margin-top">View My Bookings</a>
+        </div>
+    </div>
+
         <?php endif; ?>
     </body>
 </html>

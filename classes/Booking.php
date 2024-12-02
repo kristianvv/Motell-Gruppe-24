@@ -3,7 +3,7 @@
 class Booking {
     private int $id;
     private int $roomId;
-    private int $roomType;
+    private string $roomType;
     private int $userId;
     private $fromDate; // DateTime or string
     private $toDate; // DateTime or string
@@ -11,7 +11,7 @@ class Booking {
     private int $children;
 
     // Constructor
-    public function __construct($id = null, $roomId = null, $roomType, $userId, $fromDate, $toDate, $adults, $children) {
+    public function __construct($id, $roomId, $roomType, $userId, $fromDate, $toDate, $adults, $children) {
         $this->id = $id;
         $this->roomId = $roomId;
         $this->roomType = $roomType;
@@ -85,7 +85,7 @@ class Booking {
     }
 
     // Get room ID range by type
-    private function getRoomRangeByType($roomType) {
+    private function getRoomRangeByType($roomType): array|null {
         switch ($roomType) {
             case 'enkeltrom': return ['start' => 1, 'end' => 10];
             case 'dobbeltrom': return ['start' => 11, 'end' => 20];
@@ -125,42 +125,87 @@ class Booking {
                                  FROM Booking, Rooms
                                  WHERE Booking.roomID = Rooms.roomID
                                  ORDER BY Booking.createdAt DESC");
+            $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-           return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $bookingObjects = [];
+            foreach ($bookings as $booking) {
+                $bookingObjects[] = new Booking(id: $booking['id'], roomId: $booking['roomID'], roomType: $booking['roomType'], userId: $booking['userID'], fromDate: $booking['checkInDate'], toDate: $booking['checkOutDate'], adults: $booking['adults'], children: $booking['children']);
+            }
+
+            return $bookingObjects;
 
         } catch (PDOException $e) {
             echo "Error fetching bookings: " . $e->getMessage();
             return [];
         }
     }
+    // Get booking by ID
+    public static function get_booking_by_id($pdo, $id) {
+        try {
+            $stmt = $pdo->prepare("SELECT Booking.id, Booking.roomID, Booking.userID, Booking.checkInDate, Booking.checkOutDate, Booking.createdAt, Rooms.adults, Rooms.roomType, Rooms.children
+                                   FROM Booking, Rooms
+                                   WHERE Booking.roomID = Rooms.roomID
+                                   AND Booking.id = :id");
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
 
-    // Getters
-    public function get_room_id() {
+            $booking = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return new Booking(id: $booking['id'], roomId: $booking['roomID'], roomType: $booking['roomType'], userId: $booking['userID'], fromDate: $booking['checkInDate'], toDate: $booking['checkOutDate'], adults: $booking['adults'], children: $booking['children']);
+
+        } catch (PDOException $e) {
+            echo "Error fetching booking: " . $e->getMessage();
+            return null;
+        }
+    }
+    public static function get_bookings_by_user_id ($pdo, $userID) {
+        
+        $sql = "SELECT * FROM Booking WHERE userID = :userID";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':userID', $userID, PDO::PARAM_INT);
+        
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+            
+    public static function cancel_booking($pdo, $id) {
+        try {
+            $stmt = $pdo->prepare("DELETE FROM Booking WHERE id = ?");
+            $stmt->execute([$id]);
+        } catch (PDOException $e) {
+            echo "Error cancelling booking"; // . $e->getMessage();
+        }
+    }
+
+    public function getId() {
+        return $this->id;
+    }
+    public function getRoomId() {
         return $this->roomId;
     }
 
-    public function get_room_type() {
+    public function getRoomType() {
         return $this->roomType;
     }
 
-    public function get_user_id() {
+    public function getUserId() {
         return $this->userId;
     }
-
-    public function get_from_date() {
+    public function getFromDate() {
         return $this->fromDate;
     }
 
-    public function get_to_date() {
+    public function getToDate() {
         return $this->toDate;
     }
 
-    public function get_adults() {
+    public function getAdults() {
         return $this->adults;
     }
-
-    public function get_children() {
+    public function getChildren() {
         return $this->children;
     }
+
 }
 ?>
