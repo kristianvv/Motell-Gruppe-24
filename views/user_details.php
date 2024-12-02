@@ -16,10 +16,10 @@ if (isset($_SESSION['user_id'])) {
             echo '<div class="w3-container w3-center" style="margin-top: 50px; max-width: 1200px; margin: 20px auto;">';
 
             // User Details Card with added margin-top to move it down by 80px
-            echo '<div class="w3-card w3-white w3-hover-shadow" style="display: inline-block; margin: 20px; width: 350px; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: box-shadow 0.3s ease; margin-top: 80px;">';
+            echo '<div class="w3-card w3-white w3-hover-shadow" style="display: inline-block; margin: 20px; width: 350px; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: box-shadow 0.3s ease; margin-top: 100px;">';
             echo '<i class="fa fa-user w3-text-red" style="font-size: 50px; margin-bottom: 16px;"></i>';
             echo '<h3 style="font-size: 1.8em; margin-bottom: 20px; color: #333;">User Details</h3>';
-            echo '<p style="font-size: 1.1em; line-height: 1.6; color: #555;"><strong>ID:</strong> ' . htmlspecialchars($userData->getName()) . '</p>';
+            echo '<p style="font-size: 1.1em; line-height: 1.6; color: #555;"><strong>ID:</strong> ' . htmlspecialchars($_SESSION['user_id']) . '</p>';
             echo '<p style="font-size: 1.1em; line-height: 1.6; color: #555;"><strong>Name:</strong> ' . htmlspecialchars($userData->getName()) . '</p>';
             echo '<p style="font-size: 1.1em; line-height: 1.6; color: #555;"><strong>Email:</strong> ' . htmlspecialchars($userData->getEmail()) . '</p>';
             echo '<p style="font-size: 1.1em; line-height: 1.6; color: #555;"><strong>Role:</strong> ' . htmlspecialchars($userData->getRole()) . '</p>';
