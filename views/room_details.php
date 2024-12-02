@@ -1,4 +1,10 @@
 <?php
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: 401.php");
+    exit();
+} 
+
 include '../includes/dbconnect.inc.php';  // Database connection
 include '../includes/navbar.php';         // Navbar
 

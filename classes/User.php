@@ -55,13 +55,6 @@ class User {
         else return null;
     }
 
-    // Fetch user by id
-    public static function fetch_user_by_id($pdo, $id) {
-        $stmt = $pdo->prepare("SELECT * FROM User WHERE id = ?");
-        $stmt->execute([$id]);
-        return $stmt->fetch();
-    }
-
     public static function fetch_user_by_email($pdo, $email) {
         $stmt = $pdo->prepare("SELECT * FROM User WHERE email = ?");
         $stmt->execute([$email]);
