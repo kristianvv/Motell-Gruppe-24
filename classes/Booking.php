@@ -139,6 +139,45 @@ class Booking {
             return [];
         }
     }
+
+    public static function search_bookings($pdo, $query) {
+        try {
+            $sql = "SELECT Booking.id, Booking.roomID, Booking.userID, Booking.checkInDate, Booking.checkOutDate, Booking.createdAt, 
+                           Rooms.adults, Rooms.roomType, Rooms.children
+                    FROM Booking
+                    JOIN Rooms ON Booking.roomID = Rooms.roomID
+                    WHERE Booking.id LIKE :query OR Booking.roomID LIKE :query
+                    ORDER BY Booking.createdAt DESC";
+    
+            $stmt = $pdo->prepare($sql);
+            $searchTerm = '%' . $query . '%';
+            $stmt->bindParam(':query', $searchTerm, PDO::PARAM_STR);
+            $stmt->execute();
+    
+            $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+            $bookingObjects = [];
+            foreach ($bookings as $booking) {
+                $bookingObjects[] = new Booking(
+                    id: $booking['id'],
+                    roomId: $booking['roomID'],
+                    roomType: $booking['roomType'],
+                    userId: $booking['userID'],
+                    fromDate: $booking['checkInDate'],
+                    toDate: $booking['checkOutDate'],
+                    adults: $booking['adults'],
+                    children: $booking['children']
+                );
+            }
+    
+            return $bookingObjects;
+    
+        } catch (PDOException $e) {
+            echo "Error searching bookings: " . $e->getMessage();
+            return [];
+        }
+    }
+    
     // Get booking by ID
     public static function get_booking_by_id($pdo, $id) {
         try {
@@ -167,7 +206,6 @@ class Booking {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
             
     public static function cancel_booking($pdo, $id) {
         try {

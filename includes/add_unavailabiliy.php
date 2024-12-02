@@ -24,5 +24,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             exit();
         }
     }
+
+    if (Room::is_room_available($pdo, $fromDate, $toDate, $roomID)) {
+        header("Location: room_unavailable.php?roomID=$roomID&message=Rommet er allerede utilgjengelig i denne perioden");
+        exit();
+    }
+
+
 }
 ?>

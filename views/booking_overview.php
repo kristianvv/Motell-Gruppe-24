@@ -3,27 +3,41 @@
 
 <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px">
     <h2 class="w3-wide">Bookingoversikt</h2>
+
+    <!-- Search Form -->
+    <form method="POST" class="w3-margin-bottom">
+        <input type="text" name="search" placeholder="Søk etter bestillings ID eller romnummer" 
+               value="<?php echo htmlspecialchars($_POST['search'] ?? ''); ?>" 
+               class="w3-input w3-border w3-round">
+        <button type="submit" class="w3-button w3-red w3-round w3-margin-top">Søk</button>
+    </form>
+
     <div class="w3-row w3-padding-32">
         <div class="w3-card w3-padding w3-light-grey">
             <?php 
             require '../classes/Booking.php'; 
             require '../includes/dbconnect.inc.php';
 
-            //Error reporting
-            //ini_set('display_errors', 1);
-            //ini_set('display_startup_errors', 1);
+            // Fetch search query from POST
+            $searchQuery = $_POST['search'] ?? '';
 
-            //Henter alle bookinger fra databasen
-            $result = Booking::fetch_all_bookings($pdo);
+            // Fetch search results or all bookings
+            if (!empty($searchQuery)) {
+                // Search for bookings by booking ID or room ID
+                $result = Booking::search_bookings($pdo, $searchQuery);
+            } else {
+                // Fetch all bookings if no search query
+                $result = Booking::fetch_all_bookings($pdo);
+            }
 
-            //Skriver ut meldinger fra GET
+            // Display messages from GET (e.g., success or error messages)
             foreach ($_GET as $key => $value) {
                 if ($key == 'message') {
                     echo '<p class="w3-text-red">' . trim(htmlspecialchars($value)) . '</p>';
                 }
             }
 
-            //Sjekker om det er noen bookinger i resultatet, oppretter i så fall en tabell
+            // Check if there are any bookings to display
             if (!empty($result)) : ?>
                 <div class="w3-responsive">
                     <table class="w3-table-all w3-centered w3-hoverable w3-striped">
@@ -38,7 +52,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Skriver ut bookinger i tabellen med en foreach løkke-->
+                            <!-- Display bookings in the table -->
                             <?php foreach ($result as $booking) : ?>
                                 <tr>
                                     <td><?php echo htmlspecialchars($booking->getId()); ?></td>
@@ -54,6 +68,7 @@
                                             <input type="hidden" name="bookingID" value="<?php echo $booking->getId(); ?>">
                                             <input type="hidden" name="checkInDate" value="<?php echo $booking->getFromDate(); ?>">
                                             <button type="submit" class="w3-button w3-red w3-round w3-small">Kanseller</button>
+                                        </form>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
