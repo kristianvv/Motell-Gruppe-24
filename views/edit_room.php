@@ -25,7 +25,7 @@
     <div class="w3-content" style="max-width:1200px; margin: 20px auto;">
         <header class="w3-container w3-center w3-padding-32 w3-red">
             <h1>Edit Room</h1>
-            <h3>Here you can edit the details of room number: <?php echo htmlspecialchars($roomID)?></h3>
+            <h3>Here you can edit its details, or make room number: <?php echo htmlspecialchars($roomID)?> unavailable</h3>
         </header>
 
         <!-- Back Button -->
@@ -50,9 +50,14 @@
 
             <label for="price">Price per Night</label>
             <input class="w3-input" type="number" name="price" value="<?php echo $current_room->getPrice(); ?>">
+            
 
             <button class="w3-button w3-red w3-section" type="submit">Save Changes</button>
         </form>
+
+    </div>
+</div>
+
 
 <?php endif ?>
 

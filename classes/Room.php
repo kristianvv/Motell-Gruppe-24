@@ -49,6 +49,35 @@ class Room {
         return $this->price;
     }
 
+    public function make_unavailable($pdo, $fromDate, $toDate, $description) {
+    // Check for overlapping dates
+    $stmt = $pdo->prepare("
+        SELECT COUNT(*) 
+        FROM Rooms_Unavailable 
+        WHERE roomID = :roomID 
+        AND (fromDate <= :toDate AND toDate >= :fromDate)
+    ");
+    $stmt->bindParam(':roomID', $this->roomID, PDO::PARAM_INT);
+    $stmt->bindParam(':fromDate', $fromDate);
+    $stmt->bindParam(':toDate', $toDate);
+    $stmt->execute();
+
+    if ($stmt->fetchColumn() > 0) {
+        return false; // Overlapping date found
+    }
+
+    // Insert the unavailability
+    $stmt = $pdo->prepare("
+        INSERT INTO Rooms_Unavailable (roomID, fromDate, toDate, description) 
+        VALUES (:roomID, :fromDate, :toDate, :description)
+    ");
+    $stmt->bindParam(':roomID', $this->roomID, PDO::PARAM_INT);
+    $stmt->bindParam(':fromDate', $fromDate);
+    $stmt->bindParam(':toDate', $toDate);
+    $stmt->bindParam(':description', $description);
+    
+    return $stmt->execute();
+}
     //Metode som henter ut et rom basert på romID. Returnerer et Room-objekt eller false hvis rommet ikke finnes
     public static function get_room_by_id(int $roomId, PDO $pdo): Room|bool {
         $stmt = $pdo->prepare("SELECT * FROM Rooms WHERE roomID = :roomId");
@@ -120,6 +149,21 @@ class Room {
             );
         }
         return $rooms;
+    }
+    public static function get_room_availability($pdo, $roomID) {
+        $stmt = $pdo->prepare("SELECT * FROM Rooms_Unavailable WHERE roomID = :roomID");
+        $stmt->bindParam(':roomID', $roomID, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function delete_unavailability($pdo, $fromDate, $toDate, $roomID) {
+        $stmt = $pdo->prepare("DELETE FROM Rooms_Unavailable WHERE fromDate = :fromDate AND toDate = :toDate AND roomID = :roomID");
+        $stmt->bindParam(':fromDate', $fromDate);
+        $stmt->bindParam(':toDate', $toDate);
+        $stmt->bindParam(':roomID', $roomID, PDO::PARAM_INT);
+        return $stmt->execute();
+
     }
 
     //til index

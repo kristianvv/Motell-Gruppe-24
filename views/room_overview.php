@@ -42,6 +42,8 @@
                         </p>
                         <p><strong>Price per Night:</strong> <?php echo $room->getPrice(); ?> NOK</p>
                         <a href="edit_room.php?roomID=<?php echo $room->getRoomID(); ?>" class="w3-button w3-red w3-round w3-small">Edit</a>
+                        <a href="room_unavailable.php?roomID=<?php echo $room->getRoomID(); ?>" class="w3-button w3-red w3-round w3-small">Se utilgjengelighet</a>
+                        <a href="room_add_unavailable.php?roomID=<?php echo $room->getRoomID(); ?>" class="w3-button w3-red w3-round w3-small">Endre utilgjengelighet</a>
                     </div>
                 </div>
             <?php endforeach; ?>
