@@ -30,7 +30,7 @@ $bookingFailed = isset($_GET['bookingFailed']) ? (int)$_GET['bookingFailed'] : 0
                 <p><strong>Romtype:</strong> <?php echo htmlspecialchars($roomType); ?></p>  <!-- Vis romtype -->
 
                 <!-- Bookingformular -->
-                <form method="POST" action="/includes/process_booking.php" onsubmit="return validateDates()">
+                <form method="POST" action="../includes/process_booking.php" onsubmit="return validateDates()">
                     <input type="hidden" name="roomType" value="<?php echo htmlspecialchars($roomType); ?>"> <!-- Skjult felt for romtype -->
 
                     <div class="w3-margin-top" style="padding: 8px; border-radius: 8px; border: 1px solid #ddd;">
