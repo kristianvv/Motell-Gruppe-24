@@ -5,7 +5,7 @@ include '../includes/navbar.php';         // Inkluderer navigasjonsmenyen
 // Sørg for at brukeren er logget inn
 session_start();
 if (!isset($_SESSION['user_id'])) {
-    echo '<p class="w3-text-red">You must be logged in to book a room.</p>';  // Viser melding hvis brukeren ikke er logget inn
+    echo '<p class="w3-text-red">Du må være logget inn for å booke et rom.</p>';  // Viser melding hvis brukeren ikke er logget inn
     exit;  // Stopper videre scriptutførelse
 }
 
