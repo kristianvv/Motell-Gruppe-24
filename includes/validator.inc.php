@@ -38,31 +38,31 @@
                 switch ($type) {
                     case 'roomType':
                         if (!preg_match('/^[a-zA-ZæøåÆØÅ\s-]{2,50}$/', $input)) {
-                            echo '<p style="color: red;">Invalid room type description, no changes made.</p>';
+                            echo '<p style="color: red;">Ikke valid romtype description, no changes made.</p>';
                             return false;
                         }
                         break;
                     case 'nrAdults':
                         if (!preg_match('/^[1-8]{1}$/', $input)) {
-                            echo '<p style="color: red;">Invalid number of adults, no changes made.</p>';
+                            echo '<p style="color: red;">Ikke valid number of adults, no changes made.</p>';
                             return false;
                         }
                         break;
                     case 'nrChildren':
                         if (!preg_match('/^[0-9]{1}$/', $input)) {
-                            echo '<p style="color: red;">Invalid number of children, no changes made.</p>';
+                            echo '<p style="color: red;">Ikke valid number of children, no changes made.</p>';
                             return false;
                         }
                         break;
                     case 'description':
                         if (!preg_match('/^[a-zA-ZæøåÆØÅ\s-]{2,50}$/', $input)) {
-                            echo '<p style="color: red;">Invalid room description, no changes made.</p>';
+                            echo '<p style="color: red;">Ikke valid room description, no changes made.</p>';
                             return false;
                         }
                         break;
                     case 'price':
                         if (!preg_match('/^[0-9]{1,5}$/', $input)) {
-                            echo '<p style="color: red;">Invalid price, no changes made.</p>';
+                            echo '<p style="color: red;">Ikke valid price, no changes made.</p>';
                             return false;
                         }
                         break;

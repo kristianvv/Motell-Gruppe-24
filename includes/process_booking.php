@@ -33,13 +33,13 @@ $roomIds = $roomRanges[$roomType];  // Henter listen over tilgjengelige rom-ID-e
 
 // Valider innsjekkings- og utsjekkingsdatoer
 if (empty($checkin) || empty($checkout)) {
-    echo '<p class="w3-text-red">Both check-in and check-out dates are required.</p>';  // Feilmelding ved manglende datoer
+    echo '<p class="w3-text-red">Både check-in og check-out datoer er nødvendig.</p>';  // Feilmelding ved manglende datoer
     exit;
 }
 
 $currentDate = new DateTime();  // Henter dagens dato
 if (new DateTime($checkin) < $currentDate || new DateTime($checkout) <= new DateTime($checkin)) {
-    echo '<p class="w3-text-red">Invalid dates. Check-in must be in the future, and check-out must be after check-in.</p>';  // Feilmelding ved ugyldige datoer
+    echo '<p class="w3-text-red">Feil dato. Check-in må være i framtiden, og check-out må være etter check-in.</p>';  // Feilmelding ved ugyldige datoer
     exit;
 }
 

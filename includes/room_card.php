@@ -8,7 +8,7 @@ session_start();
     <img src="<?php echo htmlspecialchars($room['image'] ?? 'default.jpg'); ?>" alt="<?php echo htmlspecialchars($room['title'] ?? 'Rom Bilde'); ?>" style="width:100%">
     <div class="w3-container w3-white">
         <h3><?php echo htmlspecialchars($room['title'] ?? 'Rom Tittel'); ?></h3>
-        <p><?php echo htmlspecialchars($room['description'] ?? 'No description available.'); ?></p>
+        <p><?php echo htmlspecialchars($room['description'] ?? 'Ingen beskrivelse.'); ?></p>
         <p class="w3-large">
             <i class="fa fa-bath"></i> 
             <i class="fa fa-phone"></i> 
@@ -16,13 +16,12 @@ session_start();
         </p>
 
         <!-- Debugging: Show room type to check if it's being set correctly -->
-        <p>Room Type: <?php echo htmlspecialchars(trim(strtolower($room['type'] ?? 'No room type set'))); ?></p>
+        <p>Room Type: <?php echo htmlspecialchars(trim(strtolower($room['type'] ?? 'Ingen romtype er satt'))); ?></p>
 
         <?php
-        // Ensure the room type is trimmed and converted to lowercase for matching
         $roomType = strtolower(trim($room['type'] ?? ''));
 
-        // Determine max capacity based on room type
+        # max capasitet på rom.
         $maxCapacity = '';
         switch ($roomType) {
             case 'enkeltrom':
