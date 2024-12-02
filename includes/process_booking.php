@@ -25,7 +25,7 @@ $roomRanges = [
 
 // Valider romtype
 if (!array_key_exists($roomType, $roomRanges)) {
-    echo '<p class="w3-text-red">Invalid room type selected.</p>';  // Feilmelding ved ugyldig romtype
+    echo '<p class="w3-text-red">Invalid room type: ' . htmlspecialchars($roomType) . '</p>';
     exit;
 }
 

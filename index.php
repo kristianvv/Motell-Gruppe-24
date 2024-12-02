@@ -36,7 +36,7 @@
             $rooms = [
                 ["id" => 1, "image" => "./public/images/enkeltrom.jpg", "title" => "Single Room", "price" => "$99", "description" => "Single bed, 15m2", "type" => "enkeltrom"],
                 ["id" => 2, "image" => "./public/images/dobbeltrom.jpg", "title" => "Double Room", "price" => "$149", "description" => "Queen-size bed, 25m2", "type" => "dobbeltrom"],
-                ["id" => 3, "image" => "./public/images/juniorsuite.jpg", "title" => "Junior Suite", "price" => "$199", "description" => "King-size bed, 40m2", "type" => "junior suite"]
+                ["id" => 3, "image" => "./public/images/juniorsuite.jpg", "title" => "Junior Suite", "price" => "$199", "description" => "King-size bed, 40m2", "type" => "juniorsuite"]
             ];
 
             $filtered_rooms = [];
@@ -44,9 +44,9 @@
             if ($adults === 1 && $children <= 1) {
                 $filtered_rooms = array_filter($rooms, fn($room) => $room['type'] === 'enkeltrom');
             } elseif ($adults === 2 && $children <= 2) {
-                $filtered_rooms = array_filter($rooms, fn($room) => in_array($room['type'], ['dobbeltrom', 'junior suite']));
+                $filtered_rooms = array_filter($rooms, fn($room) => in_array($room['type'], ['dobbeltrom', 'juniorsuite']));
             } elseif ($adults > 2 || $children > 2) {
-                $filtered_rooms = array_filter($rooms, fn($room) => $room['type'] === 'junior suite');
+                $filtered_rooms = array_filter($rooms, fn($room) => $room['type'] === 'juniorsuite');
             }
 
             if (empty($filtered_rooms)) {
