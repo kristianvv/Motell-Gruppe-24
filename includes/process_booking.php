@@ -1,87 +1,91 @@
 <?php
-include '../includes/dbconnect.inc.php';  // Koble til databasen
-include '../includes/navbar.php';         // Inkluder navigasjonsbaren
+include '../includes/dbconnect.inc.php';  // Inkluderer databaseforbindelsen
+include '../includes/navbar.php';         // Inkluderer navigasjonsmenyen
 
-// Hent romdetaljer fra GET-parameterne (i tilfelle omdirigering etter booking)
-$roomType = htmlspecialchars($_GET['roomType'] ?? 'enkeltrom');  // Velg romtype, standard er 'enkeltrom'
-$checkin = htmlspecialchars($_GET['checkin'] ?? '');  // Hent innsjekkingsdato
-$checkout = htmlspecialchars($_GET['checkout'] ?? '');  // Hent utsjekkingsdato
-$image = htmlspecialchars($_GET['image'] ?? 'public/images/default.jpg');  // Hent bilde, standard er default-bildet
-$image = '/' . ltrim($image, '/');  // Sørg for at bildet starter fra rotkatalogen
-$bookingFailed = isset($_GET['bookingFailed']) ? (int)$_GET['bookingFailed'] : 0;  // Hvis bestillingen mislyktes, vis en feilmelding
-?>
-
-<div class="w3-content" style="max-width:1200px; margin: 100px auto;">
-    <header class="w3-container w3-center w3-padding-32 w3-red" style="border-radius: 8px; padding: 20px;">
-        <h2>Book et rom</h2>  <!-- Tittel for bookingseksjonen -->
-        <p>Vennligst velg romtype og datoene for booking.</p>  <!-- Forklaringstekst -->
-    </header>
-
-    <div class="w3-row-padding" style="margin-top: 40px;">
-        <!-- Seksjon for rombilde -->
-        <div class="w3-half">
-            <img src="<?php echo $image; ?>" alt="Room Image" style="width:100%; margin-top: 20px; border-radius: 8px;">
-        </div>
-
-        <!-- Seksjon for bookingformular -->
-        <div class="w3-half">
-            <div class="w3-card w3-white w3-hover-shadow" style="margin-top: 20px; padding: 30px; border-radius: 8px; height: 381px;"> <!-- Økt høyde med 20px -->
-                <h3>Romdetaljer</h3>  <!-- Tittel for romdetaljer -->
-                <p><strong>Romtype:</strong> <?php echo htmlspecialchars($roomType); ?></p>  <!-- Vis romtype -->
-
-                <!-- Bookingformular -->
-                <form method="POST" action="/includes/process_booking.php" onsubmit="return validateDates()">
-                    <input type="hidden" name="roomType" value="<?php echo htmlspecialchars($roomType); ?>"> <!-- Skjult felt for romtype -->
-
-                    <div class="w3-margin-top" style="padding: 8px; border-radius: 8px; border: 1px solid #ddd;">
-                        <label for="checkin">Innsjekkingsdato:</label>
-                        <input type="date" id="checkin" name="checkin" class="w3-input w3-border" value="<?php echo htmlspecialchars($checkin); ?>" required style="border-radius: 8px; height: 35px;">
-                    </div>
-                    <div class="w3-margin-top" style="padding: 8px; border-radius: 8px; border: 1px solid #ddd;">
-                        <label for="checkout">Utsjekkingsdato:</label>
-                        <input type="date" id="checkout" name="checkout" class="w3-input w3-border" value="<?php echo htmlspecialchars($checkout); ?>" required style="border-radius: 8px; height: 35px;">
-                    </div>
-                    <button type="submit" class="w3-button w3-red w3-margin-top" style="border-radius: 8px; padding: 10px 20px;">Book dette rommet</button>
-                </form>
-
-                <!-- Vis melding hvis ingen rom er tilgjengelig (popup når booking feiler) -->
-                <?php if ($bookingFailed): ?>
-                    <div id="noRoomsModal" class="w3-modal" style="display: block;">
-                        <div class="w3-modal-content w3-animate-top">
-                            <header class="w3-container w3-red">
-                                <span onclick="document.getElementById('noRoomsModal').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-                                <h2>Ingen rom tilgjengelig</h2>
-                            </header>
-                            <div class="w3-container">
-                                <p>Ingen rom er tilgjengelige for den valgte typen og datoene. Vennligst prøv med andre datoer eller romtype.</p>
-                            </div>
-                        </div>
-                    </div>
-                <?php endif; ?>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-// Funksjon for å validere at utsjekkingsdato er etter innsjekkingsdato, og at innsjekkingsdato er i fremtiden
-function validateDates() {
-    const checkin = document.getElementById('checkin').value;
-    const checkout = document.getElementById('checkout').value;
-
-    // Sjekk at utsjekkingsdato er etter innsjekkingsdato
-    if (new Date(checkin) >= new Date(checkout)) {
-        alert('Utsjekkingsdato må være senere enn innsjekkingsdato.');
-        return false;
-    }
-
-    // Sjekk at innsjekkingsdato er i fremtiden
-    if (new Date(checkin) < new Date()) {
-        alert('Innsjekkingsdato må være i fremtiden.');
-        return false;
-    }
-
-    return true;
+// Sørg for at brukeren er logget inn
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    echo '<p class="w3-text-red">You must be logged in to book a room.</p>';  // Viser melding hvis brukeren ikke er logget inn
+    exit;  // Stopper videre scriptutførelse
 }
-</script>
+
+$userId = $_SESSION['user_id'];  // Henter bruker-ID fra sesjonen
+
+// Hent romdetaljer fra POST- eller GET-forespørselen
+$roomType = htmlspecialchars($_POST['roomType'] ?? ($_GET['roomType'] ?? 'enkeltrom'));  // Standard romtype er "enkeltrom"
+$checkin = htmlspecialchars($_POST['checkin'] ?? ($_GET['checkin'] ?? ''));  // Innsjekkingsdato
+$checkout = htmlspecialchars($_POST['checkout'] ?? ($_GET['checkout'] ?? ''));  // Utsjekkingsdato
+
+// Definer romnumre basert på databasekonfigurasjon
+$roomRanges = [
+    'enkeltrom' => range(1, 10),  // Rom 1 til 10
+    'dobbeltrom' => range(11, 20),  // Rom 11 til 20
+    'juniorsuite' => range(21, 25)  // Rom 21 til 25
+];
+
+// Valider romtype
+if (!array_key_exists($roomType, $roomRanges)) {
+    echo '<p class="w3-text-red">Invalid room type selected.</p>';  // Feilmelding ved ugyldig romtype
+    exit;
+}
+
+$roomIds = $roomRanges[$roomType];  // Henter listen over tilgjengelige rom-ID-er for den valgte romtypen
+
+// Valider innsjekkings- og utsjekkingsdatoer
+if (empty($checkin) || empty($checkout)) {
+    echo '<p class="w3-text-red">Both check-in and check-out dates are required.</p>';  // Feilmelding ved manglende datoer
+    exit;
+}
+
+$currentDate = new DateTime();  // Henter dagens dato
+if (new DateTime($checkin) < $currentDate || new DateTime($checkout) <= new DateTime($checkin)) {
+    echo '<p class="w3-text-red">Invalid dates. Check-in must be in the future, and check-out must be after check-in.</p>';  // Feilmelding ved ugyldige datoer
+    exit;
+}
+
+// Sett standardbilde basert på romtypen
+$image = '/public/images/' . $roomType . '.jpg';  // Genererer bildesti dynamisk
+
+// Prøv å booke rommet ved å sjekke tilgjengelighet
+$bookingSuccessful = false;
+foreach ($roomIds as $roomId) {
+    // Sjekk om rommet er tilgjengelig
+    $stmt = $pdo->prepare("SELECT * FROM Booking WHERE roomID = :roomID AND checkInDate < :checkout AND checkOutDate > :checkin");
+    $stmt->execute([
+        ':roomID' => $roomId,
+        ':checkin' => $checkin,
+        ':checkout' => $checkout
+    ]);
+
+    $existingBooking = $stmt->fetch();  // Hent eksisterende booking
+
+    if (!$existingBooking) {
+        // Hvis rommet er ledig, gjennomfør booking
+        $stmt = $pdo->prepare("INSERT INTO Booking (roomID, userID, checkInDate, checkOutDate)
+                               VALUES (:roomID, :userID, :checkin, :checkout)");
+        $stmt->execute([
+            ':roomID' => $roomId,
+            ':userID' => $userId,
+            ':checkin' => $checkin,
+            ':checkout' => $checkout
+        ]);
+
+        // Hent booking-ID fra databasen
+        $bookingId = $pdo->lastInsertId();
+
+        // Omdiriger til bekreftelsessiden med bookingdetaljer
+        header("Location: ../views/booking_confirmed.php?bookingId=" . urlencode($bookingId) . "&roomId=" . urlencode($roomId) . "&checkin=" . urlencode($checkin) . "&checkout=" . urlencode($checkout) . "&image=" . urlencode($image));
+        exit;  // Stopp scriptutførelse etter omdirigering
+
+        $bookingSuccessful = true;  // Marker at booking var vellykket
+        break;  // Avslutt loopen etter vellykket booking
+    }
+}
+
+// Hvis booking feilet, omdiriger tilbake til romdetaljsiden med en feilmelding
+if (!$bookingSuccessful) {
+    header("Location: ../views/room_details.php?roomType=" . urlencode($roomType) . "&checkin=" . urlencode($checkin) . "&checkout=" . urlencode($checkout) . "&image=" . urlencode($image) . "&bookingFailed=1");
+    exit;  // Stopp scriptutførelse her
+}
+
+?>
