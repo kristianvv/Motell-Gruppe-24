@@ -64,3 +64,12 @@ ALTER TABLE `Rooms` ADD COLUMN `price` INT NOT NULL DEFAULT 0;
 UPDATE `Rooms` SET `price` = 500 WHERE `roomType` = 'Enkeltrom';
 UPDATE `Rooms` SET `price` = 1000 WHERE `roomType` = 'Dobbeltrom';
 UPDATE `Rooms` SET `price` = 2000 WHERE `roomType` = 'Juniorsuite';
+
+CREATE TABLE Rooms_Unavailable (
+  roomID int(11) NOT NULL,
+  fromDate date NOT NULL,
+  toDate date NOT NULL,
+  description varchar(2000) DEFAULT NULL,
+  PRIMARY KEY (roomID, fromDate, toDate),
+  FOREIGN KEY (roomID) REFERENCES Rooms(roomID)
+);
