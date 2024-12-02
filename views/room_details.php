@@ -1,12 +1,12 @@
 <?php
 
+include '../includes/dbconnect.inc.php';  // Database connection
+include '../includes/navbar.php';         // Navbar
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: 401.php");
     exit();
 } 
-
-include '../includes/dbconnect.inc.php';  // Database connection
-include '../includes/navbar.php';         // Navbar
 
 // Get room details from GET parameters
 $roomType = htmlspecialchars($_GET['roomType'] ?? 'enkeltrom');
