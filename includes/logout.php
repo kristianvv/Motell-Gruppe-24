@@ -1,14 +1,14 @@
 <?php
 
-// Start the session
+//Start session
 session_start();
 
-// Unset all session variables
+//Fjerne alle session variabler
 $_SESSION = [];
 
-// Destroy the session
+//Kjør session_destroy for å slette session data
 session_destroy();
-$_SESSION['flash_message'] = "You have been successfully logged out.";
-header("Location: /Motell-Gruppe-24/index.php"); // redirect after logout 
+
+header("Location: /Motell-Gruppe-24/index.php"); // redirect etter utlogging 
 exit();
 ?>

@@ -1,5 +1,4 @@
 <?php
-//echo 'Hello World! I am a database connection!' . '<br>'; (for testing purposes)
 
 define('DB_HOST', '127.0.0.1');
 define('DB_USER', 'root');
@@ -12,7 +11,7 @@ try {
    $pdo = new PDO($dkn, DB_USER, DB_PASS);
 }
     catch (PDOException $e) {
-        echo "Feil ved tilkobling til databasen: " . $e-> getMessage();
+        echo "Feil ved tilkobling til databasen. "; //Fjerner print av feilmelding til produksjon. $e-> getMessage();
     }
 
     register_shutdown_function(function() use (&$pdo) {

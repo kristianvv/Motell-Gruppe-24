@@ -14,11 +14,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $email = trim(htmlspecialchars($_POST['email']));
     
     if ($userID == $_SESSION['user_id']) {
-        header("Location: ../views/admin_administration.php?message=You cannot delete yourself!!");
+        header("Location: ../views/admin_administration.php?message=Du kan ikke slette deg selv!!");
         exit();
     } else {
         User::delete_user($pdo, $userID);
-        header("Location: ../views/admin_administration.php?message=User with email: $email deleted successfully");
+        header("Location: ../views/admin_administration.php?message=Bruker med email: $email slettet");
         exit();
     }
    

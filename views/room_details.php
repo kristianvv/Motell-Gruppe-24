@@ -12,11 +12,9 @@ if (!isset($_SESSION['user_id'])) {
 $roomType = htmlspecialchars($_GET['roomType'] ?? 'enkeltrom');
 $checkin = htmlspecialchars($_GET['checkin'] ?? '');
 $checkout = htmlspecialchars($_GET['checkout'] ?? '');
-$image = htmlspecialchars($_GET['image'] ?? '/public/images/default.jpg');
+$image = '/Motell-Gruppe-24/public/images/' . $roomType. '.jpg';
 $bookingFailed = isset($_GET['bookingFailed']) ? (int)$_GET['bookingFailed'] : 0;
 
-// Ensure the image path starts from the root
-$image = '/' . ltrim($image, '/');
 ?>
 
 <div class="w3-content" style="max-width:1200px; margin: 100px auto;">

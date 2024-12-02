@@ -4,9 +4,6 @@
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
-    echo '<pre>';
-    print_r($_POST);
-
     require 'dbconnect.inc.php';
     require '../classes/Room.php';
     
@@ -15,10 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $toDate = trim(htmlspecialchars($_POST['toDate']));
     
     if (Room::delete_unavailability($pdo,  $fromDate, $toDate, $roomID)) {
-        header("Location: ../views/room_unavailable.php?roomID=$roomID&message=Unavailability deleted successfully");
+        header("Location: ../views/room_unavailable.php?roomID=$roomID&message=Utilgjengelighet slettet");
         exit();
     } else {
-        header("Location: ../views/room_unavailable.php?roomID=$roomID&message=Failed to delete unavailability");
+        header("Location: ../views/room_unavailable.php?roomID=$roomID&message=Kunne ikke slette utilgjengelighet");
         exit();
     }
 }  
