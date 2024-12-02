@@ -32,7 +32,7 @@ if (!$roomDetails) {
     
     <div style="background-color: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
         <p><strong>Booking ID:</strong> <span class="w3-text-blue"><?php echo htmlspecialchars($bookingId); ?></span></p>
-        <p><strong>Room ID:</strong> <span class="w3-text-blue"><?php echo htmlspecialchars($roomId); ?></span></p>
+        <p><strong>Room Number:</strong> <span class="w3-text-blue"><?php echo htmlspecialchars($roomId); ?></span></p>
         <p><strong>Room Type:</strong> <span class="w3-text-blue"><?php echo htmlspecialchars($roomDetails['roomType']); ?></span></p>
         <p><strong>Scheduled Date:</strong> <span class="w3-text-blue">From <?php echo htmlspecialchars($checkin); ?> to <?php echo htmlspecialchars($checkout); ?></span></p>
     </div>
