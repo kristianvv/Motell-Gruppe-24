@@ -12,7 +12,7 @@ if (!isset($_SESSION['user_id'])) {
 $roomType = htmlspecialchars($_GET['roomType'] ?? 'enkeltrom');
 $checkin = htmlspecialchars($_GET['checkin'] ?? '');
 $checkout = htmlspecialchars($_GET['checkout'] ?? '');
-$image = '/public/images/' . $roomType. '.jpg';
+$image = '/Motell-Gruppe-24/public/images/' . $roomType. '.jpg';
 $bookingFailed = isset($_GET['bookingFailed']) ? (int)$_GET['bookingFailed'] : 0;
 
 ?>
