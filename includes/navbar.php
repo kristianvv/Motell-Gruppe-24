@@ -49,18 +49,17 @@ if (session_status() == PHP_SESSION_NONE) {
         </a>
         <?php if (isset($_SESSION['user_id'])): ?>
             <!-- Display if the user is logged in -->
-            <a href="/Motell-Gruppe-24/index.php#rooms" class="w3-bar-item w3-button w3-mobile">Rooms</a>
+            <a href="/Motell-Gruppe-24/index.php#rooms" class="w3-bar-item w3-button w3-mobile">Rom</a>
             <!-- If the user is an admin -->
             <?php if ($_SESSION['user_role'] == 'Admin'): ?>
                 <a href="/Motell-Gruppe-24/views/admin_view.php" class="w3-bar-item w3-button w3-right w3-mobile">Admin panel</a>
             <?php endif; ?>
-            <a href="/Motell-Gruppe-24/views/user_view.php" class="w3-bar-item w3-button w3-right w3-mobile">My Account</a>
+            <a href="/Motell-Gruppe-24/views/user_view.php" class="w3-bar-item w3-button w3-right w3-mobile">Min Bruker</a>
             <a href="/Motell-Gruppe-24/includes/logout.php" class="w3-bar-item w3-button w3-right w3-mobile w3-red">Logout</a>
             <?php 'session_check.php'; ?>
         <?php else: ?>
             <!-- Display if the user is logged in -->
-            <a href="/Motell-Gruppe-24/index.php#rooms" class="w3-bar-item w3-button w3-mobile">Rooms</a>
-            <a href="/Motell-Gruppe-24/index.php#about" class="w3-bar-item w3-button w3-mobile">Contact</a>
+            <a href="/Motell-Gruppe-24/index.php#rooms" class="w3-bar-item w3-button w3-mobile">Rom</a>
             <a href="/Motell-Gruppe-24/views/registration.php" class="w3-bar-item w3-button w3-right w3-mobile w3-red">Register</a>
             <a href="/Motell-Gruppe-24/views/login.php" class="w3-bar-item w3-button w3-right w3-mobile w3-red">Login</a>
         <?php endif; ?>
