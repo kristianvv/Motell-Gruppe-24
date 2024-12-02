@@ -2,9 +2,8 @@
 
 <?php
 
-//set error_reporting to show all errors and warnings
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+//error_reporting(E_ALL);
+//ini_set('display_errors', 1);
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     require '../includes/dbconnect.inc.php';
@@ -15,13 +14,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $new_role = trim(htmlspecialchars($_POST['role']));
 
     if ($userID == $_SESSION['user_id']) {
-        header("Location: ../views/admin_administration.php?message=You cannot change your own role!!");
+        header("Location: ../views/admin_administration.php?message=Du kan ikke slette deg selv!!");
         exit();
    
     } else {
         
         User::update_role($pdo, $userID, $new_role);
-        header("Location: ../views/admin_administration.php?message=Role for user with email: $email updated successfully");
+        header("Location: ../views/admin_administration.php?message=Rolle for $email updated successfully");
         exit();
     }
    

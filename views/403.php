@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>403 - Access Denied</h1>
-    <p>You need to be logged  in as an Admin to access this page.</p>
+    <p>Du må være innlogget som administrator for å ha tilgang til denne siden.</p>
     <a href="../index.php">Home</a>
 </body>
 </html>

@@ -24,35 +24,35 @@
 <?php if ($current_room) : ?>
     <div class="w3-content" style="max-width:1200px; margin: 20px auto;">
         <header class="w3-container w3-center w3-padding-32 w3-red">
-            <h1>Edit Room</h1>
-            <h3>Here you can edit its details, or make room number: <?php echo htmlspecialchars($roomID)?> unavailable</h3>
+            <h1>Rediger romdetaljer</h1>
+            <h3>Her kan du endre romdetaljer og utilgjengelighet for rom nummer <?php echo htmlspecialchars($roomID)?></h3>
         </header>
 
         <!-- Back Button -->
-        <a href="room_overview.php" class="w3-button w3-blue w3-margin-bottom">Back to Room Overview</a>
+        <a href="room_overview.php" class="w3-button w3-blue w3-margin-bottom">Tilbake</a>
 
         <form class="w3-container" action="<?php $_SERVER['PHP_SELF']?>" method="POST">
-            <label for="roomType">Room Type</la>
+            <label for="roomType">Romtype</la>
                 <select class="w3-select" name="roomType">
                     <option value="Enkeltrom" <?php echo ($current_room->getRoomType() == 'Enkeltrom') ? 'selected' : ''; ?>>Enkeltrom</option>
                     <option value="Dobbeltrom" <?php echo ($current_room->getRoomType() == 'Dobbeltrom') ? 'selected' : ''; ?>>Dobbeltrom</option>
                     <option value="Juniorsuite" <?php echo ($current_room->getRoomType() == 'Juniorsuite') ? 'selected' : ''; ?>>Juniorsuite</option>
                 </select>
 
-            <label for="nrAdults">Max Adults</label>
+            <label for="nrAdults">Sengeplasser voksne</label>
             <input class="w3-input" type="number" name="nrAdults" value="<?php echo $current_room->getNrAdults(); ?>">
 
-            <label for="nrChildren">Max Children</label>
+            <label for="nrChildren">Sengeplasser barn</label>
             <input class="w3-input" type="number" name="nrChildren" value="<?php echo $current_room->getNrChildren(); ?>">
 
-            <label for="description">Room Description</label>
+            <label for="description">Rombeskrivelse</label>
             <textarea class="w3-input" name="description" rows="4" placeholder="Enter a detailed room description"><?php echo $current_room->getDescription(); ?></textarea>
 
-            <label for="price">Price per Night</label>
+            <label for="price">Pris per natt</label>
             <input class="w3-input" type="number" name="price" value="<?php echo $current_room->getPrice(); ?>">
             
 
-            <button class="w3-button w3-red w3-section" type="submit">Save Changes</button>
+            <button class="w3-button w3-red w3-section" type="submit">Lagre endringer</button>
         </form>
 
     </div>

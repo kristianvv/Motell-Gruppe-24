@@ -5,9 +5,9 @@
 
 <?php
 
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
+    //ini_set('display_errors', 1);
+    //ini_set('display_startup_errors', 1);
+    //error_reporting(E_ALL);
     
     if (isset($_GET['roomID'])) {
         $roomID = $_GET['roomID'];
@@ -21,8 +21,8 @@
 <?php if ($availability): ?>
     <div class="w3-content" style="max-width:1200px; margin: 20px auto;">
         <header class="w3-container w3-center w3-padding-32 w3-red">
-            <h1>Room unavailability</h1>
-            <h3>Here you can view the unavailability of room number: <?php echo htmlspecialchars($roomID)?></h3>
+            <h1>Utilgjengelighet</h1>
+            <h3>Her kan du se Utilgjengeligheten til rom nummer <?php echo htmlspecialchars($roomID)?></h3>
         </header>
 
         <?php
@@ -33,10 +33,10 @@
 
         <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
             <tr>
-                <th>Unavailable from</th>
-                <th>Unavailable to</th>
-                <th>Description</th>
-                <th>Actions</th>
+                <th>Utilgjengelig fra</th>
+                <th>Utilgjengelig til</th>
+                <th>Beskrivelse</th>
+                <th>Fjern utilgjengelighet</th>
             </tr>
             <?php foreach ($availability as $date) : ?>
                 <tr>
@@ -48,7 +48,7 @@
                             <input type="hidden" name="fromDate" value="<?php echo $date['fromDate']; ?>">
                             <input type="hidden" name="toDate" value="<?php echo $date['toDate']; ?>">
                             <input type="hidden" name="roomID" value="<?php echo $roomID; ?>">
-                            <button type="submit" class="w3-button w3-red">Delete</button>
+                            <button type="submit" class="w3-button w3-red">Fjern</button>
                     </td>
                 </tr>
             <?php endforeach; ?>

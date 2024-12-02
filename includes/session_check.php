@@ -4,24 +4,24 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// Set denne ned når prosjektet er ferdig, brukes kún for testing
+// Set denne ned når prosjektet er ferdig, brukes kun for testing
 $timeout_duration = 3600;
 
-// Check if the user is logged in
+//Sjekker om bruker er logget inn
 if (isset($_SESSION['user_id'])) {
-    // Check if the session has timed out
+    // Sjekker om session har gått ut
     if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $timeout_duration)) {
-        // Session expired
-        session_unset(); // Unset session variables
-        session_destroy(); // Destroy the session
-        header("Location: ../views/login.php?message=Session expired, please log in again.");
+        // Hvis den har gått ut, logg ut bruker ved å fjerne session variabler og send til login
+        session_unset(); 
+        session_destroy();
+        header("Location: ../views/login.php?message=Sesjonen har gått ut, vennligst logg inn på nytt.");
         exit();
     }
-    // Update last activity time
+    // Oppdaterer siste aktivitet. Dette skjer hver gang bruker gjør en handling eller laster en ny side
     $_SESSION['last_activity'] = time();
 } else {
-    // User is not logged in, redirect to login page
-    header("Location: ../views/login.php?message=Please log in to access this page.");
+    //Bruker er ikke logget inn, send til login
+    header("Location: ../views/login.php?message=Vennligst logg inn for å fortsette.");
     exit();
 }
 ?>

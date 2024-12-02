@@ -28,47 +28,46 @@ $user = User::get_user_by_id($pdo, $user_id); // Get user details using the User
 <?php if ($current_booking && $user) : ?>
     <div class="w3-content" style="max-width:1200px; margin: 20px auto;">
         <header class="w3-container w3-center w3-padding-32 w3-red">
-            <h1>Booking Details</h1>
-            <h3>Here you can view and edit the details of booking ID: <?php echo htmlspecialchars($current_booking->getId()); ?></h3>
+            <h1>Bestillingsdetaljer</h1>
+            <h3>Her kan du se detaljene til booking nummer <?php echo htmlspecialchars($current_booking->getId()); ?></h3>
         </header>
 
         <!-- Back Button --> 
-        <a href="booking_overview.php" class="w3-button w3-red w3-margin-bottom">Back to Booking Overview</a>
+        <a href="booking_overview.php" class="w3-button w3-red w3-margin-bottom">Tilbake til bestillingsoversikt</a>
 
         <form class="w3-container" action="update_booking.php" method="POST">
             <!-- Booking Information -->
-            <h4><strong>Room Details</strong></h4>
-            <label for="roomType">Room Type</label>
+            <h4><strong>Romdetaljer</strong></h4>
+            <label for="roomType">Romtype</label>
             <select class="w3-select" name="roomType">
                 <option value="Enkeltrom" <?php echo ($current_booking->getRoomType() == 'Enkeltrom') ? 'selected' : ''; ?>>Enkeltrom</option>
                 <option value="Dobbeltrom" <?php echo ($current_booking->getRoomType() == 'Dobbeltrom') ? 'selected' : ''; ?>>Dobbeltrom</option>
                 <option value="Juniorsuite" <?php echo ($current_booking->getRoomType() == 'Juniorsuite') ? 'selected' : ''; ?>>Juniorsuite</option>
             </select>
 
-            <label for="fromDate">Check-in Date</label>
+            <label for="fromDate">Innsjekk</label>
             <input class="w3-input" type="date" name="fromDate" value="<?php echo htmlspecialchars($current_booking->getFromDate()); ?>" required>
 
-            <label for="toDate">Check-out Date</label>
+            <label for="toDate">Utsjekk</label>
             <input class="w3-input" type="date" name="toDate" value="<?php echo htmlspecialchars($current_booking->getToDate()); ?>" required>
 
-            <label for="nrAdults">Number of Adults</label>
+            <label for="nrAdults">Antall voksne</label>
             <input class="w3-input" type="number" name="nrAdults" value="<?php echo $current_booking->getAdults(); ?>" required>
 
-            <label for="nrChildren">Number of Children</label>
+            <label for="nrChildren">Antall barn</label>
             <input class="w3-input" type="number" name="nrChildren" value="<?php echo $current_booking->getChildren(); ?>" required>
 
             <!-- User Information (Read-only) -->
-            <h4><strong>Guest information</strong></h4>
-            <p><strong>Name:</strong> <?php echo htmlspecialchars($user->getName()); ?></p>
+            <h4><strong>Gjesteinformasjon</strong></h4>
+            <p><strong>Navn:</strong> <?php echo htmlspecialchars($user->getName()); ?></p>
             <p><strong>Email:</strong> <?php echo htmlspecialchars($user->getEmail()); ?></p>
-            <p><strong>Role:</strong> <?php echo htmlspecialchars($user->getRole()); ?></p>
 
-            <button class="w3-button w3-red w3-section" type="submit">Save Changes</button>
+            <button class="w3-button w3-red w3-section" type="submit">Lagre endringer</button>
         </form>
     </div>
 <?php else : ?>
     <div class="w3-container w3-center w3-padding-32">
-        <p class="w3-text-red">Booking or User not found!</p>
+        <p class="w3-text-red">Bestilling eller bruker ikke funnnet</p>
     </div>
 <?php endif; ?>
 

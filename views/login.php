@@ -3,7 +3,7 @@
 <div class="center-container">
     <div class="login-form-container w3-padding">
         <div class="w3-container w3-red">
-            <h2><i class="fa fa-bed w3-margin-right"></i>Le Fabuleux Motel</h2>
+            <h2><i class="fa fa-bed w3-margin-right"></i>Motell Gruppe 24</h2>
         </div>
         <div class="w3-container w3-padding-16">
             <form action="" method="post">
@@ -12,12 +12,12 @@
                     <input class="w3-input w3-border" type="email" id="email" name="email" placeholder="Email" required>
                 </div>
                 <div class="w3-margin-bottom">
-                    <label for="password">Password:</label>
+                    <label for="password">Passord:</label>
                     <input class="w3-input w3-border" type="password" id="pw" name="pw" placeholder="Enter Password" required>
                 </div>
                 <div class="w3-margin-bottom">
                     <input class="w3-button w3-block w3-green" type="submit" value="Login">
-                    <span class="psw">Forgot <a href="forgot_password.php">password?</a></span>
+                    <span class="psw">Glemt <a href="forgot_password.php">passord?</a></span>
                 </div>
             </form>
 
@@ -46,7 +46,7 @@
                     $_SESSION['last_failed_attempt'] = time();
                 }
 
-                // Sanitize input data
+                // 'vasker' input fra POST
                 foreach ($_POST as &$posts) {
                     $posts = trim(htmlspecialchars($posts));
                 }
@@ -66,7 +66,6 @@
                     exit();
                 }
 
-                
                 $_SESSION['failed_attempts'] = 0; 
                 $_SESSION['user_id'] = $userdata['userID'];
                 $_SESSION['user_email'] = $userdata['email'];
@@ -81,7 +80,8 @@
                     header("Location: user_view.php");
                     exit();
                 }
-
+                
+                //Lar stå for debugging, for eksempelet vil dette aldri bli kjørt med mindre det er feil med rollen
                 echo '<h1>Login successful</h1>';
                 echo '<p>Welcome ' . $_SESSION['user_name'] . '</p>';
             }

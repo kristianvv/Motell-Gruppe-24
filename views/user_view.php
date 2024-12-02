@@ -13,15 +13,15 @@ if (!isset($_SESSION['user_name'])) {
         
             <div class="w3-card w3-white w3-hover-shadow" style="display: inline-block; margin: 20px; width: 300px; padding: 20px; border-radius: 8px;">
                 <i class="fa fa-id-card w3-text-red" style="font-size: 50px; margin-bottom: 16px;"></i>
-                <h3>User Details</h3>
-                <a href="user_details.php" class="w3-button w3-red w3-margin-top">Go to User Details</a>
+                <h3>Brukerdetaljer</h3>
+                <a href="user_details.php" class="w3-button w3-red w3-margin-top">Se brukerdetaljer</a>
             </div>
 
     
         <div class="w3-card w3-white w3-hover-shadow" style="display: inline-block; margin: 20px; width: 300px; padding: 20px; border-radius: 8px;">
             <i class="fa fa-calendar w3-text-red" style="font-size: 50px; margin-bottom: 16px;"></i>
-            <h3>My Bookings</h3>
-            <a href="my_bookings.php" class="w3-button w3-red w3-margin-top">View My Bookings</a>
+            <h3>Mine bestillinger</h3>
+            <a href="my_bookings.php" class="w3-button w3-red w3-margin-top">Se mine bestillinger</a>
         </div>
     </div>
 

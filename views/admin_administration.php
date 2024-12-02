@@ -12,7 +12,7 @@
                 <button type="submit" class="w3-button w3-blue w3-margin-top w3-round">Søk</button>
             </form>
 
-            <?php 
+            <?php
             require_once '../classes/User.php'; 
             require_once '../includes/dbconnect.inc.php';
 
@@ -62,7 +62,7 @@
                                         <input type="hidden" name="email" value="<?php echo $bruker['email']; ?>">
                                         <select name="role" class="w3-select w3-border w3-round" onchange="this.form.submit()">
                                             <option value="Admin" <?php echo $bruker['role'] == 'Admin' ? 'selected' : ''; ?>>Admin</option>
-                                            <option value="Guest" <?php echo $bruker['role'] == 'Guest' ? 'selected' : ''; ?>>Guest</option>
+                                            <option value="Guest" <?php echo $bruker['role'] == 'Guest' ? 'selected' : ''; ?>>Gjest</option>
                                         </select>
                                         </form>
                                     <td>

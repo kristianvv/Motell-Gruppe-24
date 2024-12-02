@@ -8,11 +8,11 @@
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                 <div class="w3-row-padding">
                     <div class="w3-col s12 m12 l12 w3-margin-bottom">
-                        <label for="username">First Name:</label>
+                        <label for="username">Fornavn:</label>
                         <input class="w3-input w3-border" type="text" id="fname" name="fname" placeholder="John">
                     </div>
                     <div class="w3-col s12 m12 l12 w3-margin-bottom">
-                        <label for="username">Last Name:</label>
+                        <label for="username">Etternavn:</label>
                         <input class="w3-input w3-border" type="text" id="lnamee" name="lname" placeholder="Galt">
                     </div>
                     <div class="w3-col s12 m12 l12 w3-margin-bottom">
@@ -26,11 +26,11 @@
                     </div>
                     -->
                     <div class="w3-col s12 m12 l12 w3-margin-bottom">
-                        <label for="password">New Password:</label>
+                        <label for="password">Passord:</label>
                         <input class="w3-input w3-border" type="password" id="password" name="password">
                     </div>
                     <div class="w3-col s12 m12 l12 w3-margin-bottom">
-                        <label for="confirm_password">Confirm New Password:</label>
+                        <label for="confirm_password">Bekreft passord:</label>
                         <input class="w3-input w3-border" type="password" id="confirm_password" name="confirm_password">
                     </div>
                     <div class="w3-col s12 m12 l12 w3-margin-bottom">
@@ -54,27 +54,27 @@
                 $name = $_POST['fname'] . ' ' . $_POST['lname'];
 
                 if (empty($name) || empty($email) || empty($password)) {
-                    echo '<p class="w3-text-red">Please fill in all fields</p>';
+                    echo '<p class="w3-text-red">Vennligst fyll inn alle feltene</p>';
                     exit();
                 }
                 require_once '../includes/validator.inc.php';
 
                 //validering av navn
                 if (!validator::validate($_POST['fname'], 'navn') || !validator::validate($_POST['lname'], 'navn')) {
-                echo '<p class="w3-text-red">Please provide a valid name</p>';
+                echo '<p class="w3-text-red">Skriv inn et navn bestående av bokstaver</p>';
                 exit();
 
                 //validering av email
                 } elseif (!validator::validate($email, 'email')) {
-                    echo '<p class="w3-text-red">Please provide a valid email</p>';
+                    echo '<p class="w3-text-red">Skriv inn en gyldig mailadresse</p>';
                     exit();
                     
                 //validering av passord
                 } elseif (!validator::validate($password, 'passord')) {
-                    echo '<p class="w3-text-red">Please provide a valid password containing at least 9 characters, 2 digits, 1 uppercase letter and 1 special character</p>';
+                    echo '<p class="w3-text-red">Skriv inn et passord bestående av minst 9 tegn, to tall, en stor bokstav og et spesialtegn</p>';
                     exit();
                 } elseif ($_POST['password'] != $_POST['confirm_password']) {
-                    echo '<p class="w3-text-red">Passwords do not match</p>';
+                    echo '<p class="w3-text-red">Passordene stemmer ikke overens</p>';
                     exit();
                 } else {
 
@@ -82,11 +82,12 @@
                 require_once '../includes/dbconnect.inc.php';
 
                     if (User::fetch_user_by_email($pdo, $email)) {
-                        echo '<p class="w3-text-red">User with this email already exists</p>';
+                        echo '<p class="w3-text-red">Bruker med denne eposten finnes allerede i systemet</p>';
                     } else {
                         $user = new User($name, $email, $password);
                         $user->register($pdo);
-                        echo '<p class="w3-text-green">User registered successfully</p>';
+                        echo '<p class="w3-text-green">Bruker registrert</p>';
+                        echo '<a href="login.php">Logg inn her</a>';
                     }
                 }
             }

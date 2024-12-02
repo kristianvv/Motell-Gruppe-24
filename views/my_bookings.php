@@ -23,14 +23,14 @@
 <?php if (!empty($bookings)) : ?>
     <div class="w3-content" style="max-width:1200px; margin: 20px auto;">
         <div class="w3-container">
-            <h2>My Bookings</h2>
+            <h2>Mine bestillinger</h2>
             <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
                 <tr>
-                    <th>Room Number</th>
-                    <th>Check In</th>
-                    <th>Check Out</th>
-                    <th>Booked on</th>
-                    <th>Request cancellation</th>
+                    <th>Romnummer</th>
+                    <th>Innsjekk</th>
+                    <th>Utsjekk</th>
+                    <th>Bestillingstidspunkt</th>
+                    <th>Be om avbestilling</th>
                 </tr>
                 <?php foreach ($bookings as $booking) : ?>
                     <tr>
@@ -42,13 +42,13 @@
                             <form action="../includes/cancel_booking.php" method="POST">
                                 <input type="hidden" name="checkInDate" value="<?php echo $booking['checkInDate']; ?>">
                                 <input type="hidden" name="bookingID" value="<?php echo $booking['id']; ?>">
-                                <button type="submit" class="w3-button w3-red">Cancel Booking</button>
+                                <button type="submit" class="w3-button w3-red">Avbestill</button>
                         </td>
                     </tr>
                     <?php endforeach; ?>
                 <?php else : ?>
                     <tr>
-                        <td colspan="5">No bookings found.</td>
+                        <td colspan="5">Ingen bestillinger funnet</td>
                     </tr>
                 <?php endif; ?>
             </table>
