@@ -98,6 +98,14 @@ class Room {
         return false;
     }
 
+    public static function is_room_available($pdo, $roomID, $fromDate, $toDate) {
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM Rooms_Unavailable WHERE roomID = :roomID AND (fromDate < :toDate AND toDate > :fromDate)");
+        $stmt->bindParam(':roomID', $roomID, PDO::PARAM_INT);
+        $stmt->bindParam(':fromDate', $fromDate);
+        $stmt->bindParam(':toDate', $toDate);
+        $stmt->execute();
+        return $stmt->fetchColumn() == 0;
+    }
     /* 
     
     Metode som lagrer et rom i databasen. Returnerer true hvis lagringen var vellykket, false ellers.
