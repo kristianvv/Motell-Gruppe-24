@@ -54,7 +54,7 @@ if (session_status() == PHP_SESSION_NONE) {
             <?php if ($_SESSION['user_role'] == 'Admin'): ?>
                 <a href="/Motell-Gruppe-24/views/admin_view.php" class="w3-bar-item w3-button w3-right w3-mobile">Admin panel</a>
             <?php endif; ?>
-            <a href="/Motell-Gruppe-24/views/user_view.php" class="w3-bar-item w3-button w3-right w3-mobile">My Account</a> <!-- Fine from index, not from views/userview -->
+            <a href="/Motell-Gruppe-24/views/user_view.php" class="w3-bar-item w3-button w3-right w3-mobile">My Account</a>
             <a href="/Motell-Gruppe-24/includes/logout.php" class="w3-bar-item w3-button w3-right w3-mobile w3-red">Logout</a>
             <?php 'session_check.php'; ?>
         <?php else: ?>
