@@ -1,6 +1,7 @@
 <?php
 include '../includes/dbconnect.inc.php';  // Inkluderer databaseforbindelsen
 include '../includes/navbar.php';         // Inkluderer navigasjonsmenyen
+include '../classes/Room.php';
 
 // Sørg for at brukeren er logget inn
 session_start();
@@ -48,37 +49,43 @@ $image = '/public/images/' . $roomType . '.jpg';  // Genererer bildesti dynamisk
 
 // Prøv å booke rommet ved å sjekke tilgjengelighet
 $bookingSuccessful = false;
+
 foreach ($roomIds as $roomId) {
-    // Sjekk om rommet er tilgjengelig
-    $stmt = $pdo->prepare("SELECT * FROM Booking WHERE roomID = :roomID AND checkInDate < :checkout AND checkOutDate > :checkin");
-    $stmt->execute([
-        ':roomID' => $roomId,
-        ':checkin' => $checkin,
-        ':checkout' => $checkout
-    ]);
+    // Sjekk om rommet er tilgjengelig via admin og brukerdatoer
+    $isRoomAvailable = Room::is_room_available($pdo, $roomId, $checkin, $checkout);
 
-    $existingBooking = $stmt->fetch();  // Hent eksisterende booking
-
-    if (!$existingBooking) {
-        // Hvis rommet er ledig, gjennomfør booking
-        $stmt = $pdo->prepare("INSERT INTO Booking (roomID, userID, checkInDate, checkOutDate)
-                               VALUES (:roomID, :userID, :checkin, :checkout)");
+    if ($isRoomAvailable) {
+        // Sjekk om rommet allerede er booket i perioden
+        $stmt = $pdo->prepare("SELECT * FROM Booking WHERE roomID = :roomID AND checkInDate < :checkout AND checkOutDate > :checkin");
         $stmt->execute([
             ':roomID' => $roomId,
-            ':userID' => $userId,
             ':checkin' => $checkin,
             ':checkout' => $checkout
         ]);
 
-        // Hent booking-ID fra databasen
-        $bookingId = $pdo->lastInsertId();
+        $existingBooking = $stmt->fetch();  // Hent eksisterende booking
 
-        // Omdiriger til bekreftelsessiden med bookingdetaljer
-        header("Location: ../views/booking_confirmed.php?bookingId=" . urlencode($bookingId) . "&roomId=" . urlencode($roomId) . "&checkin=" . urlencode($checkin) . "&checkout=" . urlencode($checkout) . "&image=" . urlencode($image));
-        exit;  // Stopp scriptutførelse etter omdirigering
+        if (!$existingBooking) {
+            // Hvis rommet er ledig, gjennomfør booking
+            $stmt = $pdo->prepare("INSERT INTO Booking (roomID, userID, checkInDate, checkOutDate)
+                                   VALUES (:roomID, :userID, :checkin, :checkout)");
+            $stmt->execute([
+                ':roomID' => $roomId,
+                ':userID' => $userId,
+                ':checkin' => $checkin,
+                ':checkout' => $checkout
+            ]);
 
-        $bookingSuccessful = true;  // Marker at booking var vellykket
-        break;  // Avslutt loopen etter vellykket booking
+            // Hent booking-ID fra databasen
+            $bookingId = $pdo->lastInsertId();
+
+            // Omdiriger til bekreftelsessiden med bookingdetaljer
+            header("Location: ../views/booking_confirmed.php?bookingId=" . urlencode($bookingId) . "&roomId=" . urlencode($roomId) . "&checkin=" . urlencode($checkin) . "&checkout=" . urlencode($checkout) . "&image=" . urlencode($image));
+            exit;  // Stopp scriptutførelse etter omdirigering
+
+            $bookingSuccessful = true;  // Marker at booking var vellykket
+            break;  // Avslutt loopen etter vellykket booking
+        }
     }
 }
 
@@ -87,5 +94,4 @@ if (!$bookingSuccessful) {
     header("Location: ../views/room_details.php?roomType=" . urlencode($roomType) . "&checkin=" . urlencode($checkin) . "&checkout=" . urlencode($checkout) . "&image=" . urlencode($image) . "&bookingFailed=1");
     exit;  // Stopp scriptutførelse her
 }
-
 ?>

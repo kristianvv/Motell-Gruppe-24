@@ -60,7 +60,7 @@ if (session_status() == PHP_SESSION_NONE) {
         <?php else: ?>
             <!-- Display if the user is logged in -->
             <a href="/Motell-Gruppe-24/index.php#rooms" class="w3-bar-item w3-button w3-mobile">Rom</a>
-            <a href="/Motell-Gruppe-24/views/registration.php" class="w3-bar-item w3-button w3-right w3-mobile w3-red">Register</a>
+            <a href="/Motell-Gruppe-24/views/registration.php" class="w3-bar-item w3-button w3-right w3-mobile w3-red">Registrer</a>
             <a href="/Motell-Gruppe-24/views/login.php" class="w3-bar-item w3-button w3-right w3-mobile w3-red">Login</a>
         <?php endif; ?>
     </div>
