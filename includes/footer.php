@@ -1,17 +1,58 @@
-<!-- includes/footer.php -->
-<footer class="w3-padding-32 w3-black w3-center w3-margin-top">
-    <h5>Find Us On</h5>
-    <div class="w3-xlarge w3-padding-16">
-        <i class="fa fa-facebook-official w3-hover-opacity"></i>
-        <i class="fa fa-instagram w3-hover-opacity"></i>
-        <i class="fa fa-snapchat w3-hover-opacity"></i>
-        <i class="fa fa-pinterest-p w3-hover-opacity"></i>
-        <i class="fa fa-twitter w3-hover-opacity"></i>
-        <i class="fa fa-linkedin w3-hover-opacity"></i>
-    </div>
-    <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank" class="w3-hover-text-green">w3.css</a></p>
-</footer>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Website Title</title>
+    <link rel="stylesheet" href="w3.css">
+    <style>
+        html, body {
+            min-height: 100%;
+            margin: 0;
+        }
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu-916DdpKAjTmJNIgngS6HL_kDIKU0aU&callback=myMap"></script>
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+
+        /* Other styles */
+        footer {
+            background: linear-gradient(to right, #343a40, #495057);
+            color: #fff;
+            padding: 32px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        footer h5 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        footer hr {
+            border: 1px solid #ddd;
+            max-width: 80%;
+            margin: 20px auto;
+        }
+
+        footer p {
+            font-size: 16px;
+            font-weight: lighter;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <footer>
+        <h5 style="font-size: 24px; font-weight: bold; margin-bottom: 20px;">Finn oss på GitHub/LinkedIn</h5>
+
+        <hr style="border: 1px solid #ddd; max-width: 80%; margin: 20px auto;">
+
+        <p style="font-size: 16px; font-weight: lighter; margin-bottom: 10px;">&copy; 2024 Nettside. Alle Rettigheter Reservert.</p>
+    </footer>
 </body>
 </html>
